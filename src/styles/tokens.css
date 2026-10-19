@@ -231,3 +231,151 @@
   --color-info: #2563EB;
   --color-info-bg: rgba(37, 99, 235, 0.10);
 }
+
+/* ==========================================================================
+   THEME 3: MIDNIGHT AURORA (Dark Navy Alternative)
+   Deep midnight navy canvas with electric violet, sky blue, and subtle teal aura.
+   ========================================================================== */
+[data-theme='midnight'] {
+  /* Surfaces */
+  --bg-primary: #0B1020;            /* Deep midnight navy canvas */
+  --bg-surface: #171D32;            /* Dark blue-gray cards & panels */
+  --bg-surface-elevated: #1E2642;   /* Hover states & dropdowns */
+  --bg-surface-glass: rgba(23, 29, 50, 0.85); /* Frosted header/modal */
+  --bg-badge: rgba(139, 92, 246, 0.12);
+
+  /* Borders & Dividers */
+  --border-subtle: #242E4C;         /* Card perimeter */
+  --border-medium: #334168;         /* Separators & inputs */
+  --border-focus: #8B5CF6;          /* Keyboard focus & active outlines */
+
+  /* Brand Accents */
+  --accent-violet: #8B5CF6;         /* Electric Violet (Primary) */
+  --accent-violet-hover: #7C3AED;
+  --accent-violet-soft: rgba(139, 92, 246, 0.16);
+  --accent-blue: #60A5FA;           /* Electric Blue (Secondary) */
+  --accent-blue-hover: #3B82F6;
+  --accent-blue-soft: rgba(96, 165, 250, 0.16);
+  --accent-teal: #2DD4BF;           /* Clean Teal (Tertiary / Highlights) */
+  --accent-teal-hover: #14B8A6;
+  --accent-teal-soft: rgba(45, 212, 191, 0.16);
+
+  /* Typography Colors */
+  --text-primary: #F8FAFC;          /* Near white header/body */
+  --text-secondary: #94A3B8;        /* Muted blue-gray subtitle */
+  --text-muted: #64748B;            /* Meta dates & placeholders */
+  --text-accent: #A78BFA;           /* Soft violet text highlight */
+
+  /* Shadows & Glows */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-card: 0 10px 30px -5px rgba(3, 7, 18, 0.45);
+  --shadow-card-hover: 0 16px 36px -4px rgba(3, 7, 18, 0.6), 0 0 20px rgba(139, 92, 246, 0.15);
+  --shadow-glow-violet: 0 0 24px rgba(139, 92, 246, 0.25);
+  --shadow-glow-blue: 0 0 24px rgba(96, 165, 250, 0.22);
+  --shadow-toast: 0 12px 32px rgba(0, 0, 0, 0.5);
+
+  /* Aurora Mesh Gradient Colors */
+  --aurora-1: rgba(139, 92, 246, 0.14); /* Violet */
+  --aurora-2: rgba(96, 165, 250, 0.10); /* Blue */
+  --aurora-3: rgba(45, 212, 191, 0.08); /* Teal */
+
+  /* Background Texture Tokens */
+  --pattern-dot: rgba(255, 255, 255, 0.05);
+  --grid-line: rgba(255, 255, 255, 0.04);
+  --hero-mesh-opacity: 0.7;
+  --hero-image-opacity: 0.38;
+
+  /* Custom Cursor Tokens */
+  --cursor-dot-color: #2DD4BF;
+  --cursor-ring-color: rgba(139, 92, 246, 0.55);
+  --cursor-glow-color: rgba(139, 92, 246, 0.25);
+
+  /* Neon Form Accents */
+  --neon-border: #8B5CF6;
+  --neon-glow: rgba(139, 92, 246, 0.25);
+  --neon-tab-bg: #8B5CF6;
+
+  /* Feedback Colors */
+  --color-success: #34D399;
+  --color-success-bg: rgba(52, 211, 153, 0.12);
+  --color-warning: #FBBF24;
+  --color-warning-bg: rgba(251, 191, 36, 0.12);
+  --color-error: #F87171;
+  --color-error-bg: rgba(248, 113, 113, 0.12);
+  --color-info: #60A5FA;
+  --color-info-bg: rgba(96, 165, 250, 0.12);
+}
+
+/* ==========================================================================
+   THEME 4: FOREST EMBER
+   Deep charcoal forest canvas with emerald green and warm amber accents.
+   ========================================================================== */
+[data-theme='forest-ember'] {
+  /* Surfaces */
+  --bg-primary: #07130F;            /* Deep forest night canvas */
+  --bg-surface: #0E201A;            /* Forest slate cards */
+  --bg-surface-elevated: #152E25;   /* Elevated panels */
+  --bg-surface-glass: rgba(14, 32, 26, 0.88);
+  --bg-badge: rgba(16, 185, 129, 0.14);
+
+  /* Borders & Dividers */
+  --border-subtle: #19382E;         /* Perimeter */
+  --border-medium: #244C3F;         /* Inputs */
+  --border-focus: #10B981;          /* Emerald focus */
+
+  /* Brand Accents */
+  --accent-violet: #10B981;         /* Emerald Green as Primary */
+  --accent-violet-hover: #059669;
+  --accent-violet-soft: rgba(16, 185, 129, 0.16);
+  --accent-blue: #F59E0B;           /* Warm Amber as Secondary */
+  --accent-blue-hover: #D97706;
+  --accent-blue-soft: rgba(245, 158, 11, 0.16);
+  --accent-teal: #34D399;           /* Mint / Light Emerald */
+  --accent-teal-hover: #10B981;
+  --accent-teal-soft: rgba(52, 211, 153, 0.16);
+
+  /* Typography Colors */
+  --text-primary: #F0FDF4;          /* Warm near-white */
+  --text-secondary: #9CA3AF;        /* Soft sage gray */
+  --text-muted: #6B7280;            /* Meta */
+  --text-accent: #34D399;           /* Emerald highlight */
+
+  /* Shadows & Glows */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.35);
+  --shadow-card: 0 10px 30px -5px rgba(0, 0, 0, 0.55);
+  --shadow-card-hover: 0 16px 36px -4px rgba(0, 0, 0, 0.75), 0 0 20px rgba(16, 185, 129, 0.18);
+  --shadow-glow-violet: 0 0 24px rgba(16, 185, 129, 0.28);
+  --shadow-glow-blue: 0 0 24px rgba(245, 158, 11, 0.25);
+  --shadow-toast: 0 12px 32px rgba(0, 0, 0, 0.6);
+
+  /* Aurora Mesh Gradient Colors */
+  --aurora-1: rgba(16, 185, 129, 0.14); /* Emerald */
+  --aurora-2: rgba(245, 158, 11, 0.12); /* Amber */
+  --aurora-3: rgba(52, 211, 153, 0.08); /* Mint */
+
+  /* Background Texture Tokens */
+  --pattern-dot: rgba(16, 185, 129, 0.06);
+  --grid-line: rgba(16, 185, 129, 0.05);
+  --hero-mesh-opacity: 0.75;
+  --hero-image-opacity: 0.35;
+
+  /* Custom Cursor Tokens */
+  --cursor-dot-color: #34D399;
+  --cursor-ring-color: rgba(16, 185, 129, 0.55);
+  --cursor-glow-color: rgba(16, 185, 129, 0.25);
+
+  /* Neon Form Accents */
+  --neon-border: #10B981;
+  --neon-glow: rgba(16, 185, 129, 0.25);
+  --neon-tab-bg: #10B981;
+
+  /* Feedback Colors */
+  --color-success: #10B981;
+  --color-success-bg: rgba(16, 185, 129, 0.12);
+  --color-warning: #F59E0B;
+  --color-warning-bg: rgba(245, 158, 11, 0.12);
+  --color-error: #EF4444;
+  --color-error-bg: rgba(239, 68, 68, 0.12);
+  --color-info: #10B981;
+  --color-info-bg: rgba(16, 185, 129, 0.12);
+}

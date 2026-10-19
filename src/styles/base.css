@@ -179,6 +179,18 @@ button {
   padding-top: var(--space-20);
   padding-bottom: var(--space-20);
   position: relative;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 500ms cubic-bezier(0.16, 1, 0.3, 1),
+              transform 500ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+/* When revealed, smoothly animate to resting position */
+.section-wrapper.is-revealed,
+.hero-section {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* Ensure sticky navigation never obscures section headings on hash jumps */
@@ -188,25 +200,60 @@ section[id],
   scroll-margin-top: calc(var(--header-height) + 1.5rem);
 }
 
-/* --- Accessible Scroll Reveal Animation --- */
-.scroll-reveal {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s var(--ease-smooth),
-              transform 0.6s var(--ease-smooth);
-  will-change: opacity, transform;
+/* --- Staggered Reveals within Sections --- */
+/* Headings (0ms delay) */
+.section-wrapper.is-revealed .section-heading {
+  animation: sectionRevealFadeUp 480ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-.scroll-reveal.revealed {
-  opacity: 1;
-  transform: translateY(0);
+/* Section Introductory Controls, Narrative, Toolbars (100ms delay) */
+.section-wrapper.is-revealed .skills-toolbar,
+.section-wrapper.is-revealed .projects-toolbar,
+.section-wrapper.is-revealed .about-narrative-col,
+.section-wrapper.is-revealed .neon-contact-card {
+  animation: sectionRevealFadeUp 500ms cubic-bezier(0.16, 1, 0.3, 1) 100ms both;
 }
 
+/* Main Cards, Grids, Panels (180ms delay) */
+.section-wrapper.is-revealed .skills-tiles-grid,
+.section-wrapper.is-revealed .projects-grid,
+.section-wrapper.is-revealed .about-stats-col,
+.section-wrapper.is-revealed .learning-timeline-wrapper,
+.section-wrapper.is-revealed .contact-info-panel {
+  animation: sectionRevealFadeUp 520ms cubic-bezier(0.16, 1, 0.3, 1) 180ms both;
+}
+
+@keyframes sectionRevealFadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Respect prefers-reduced-motion: instantly show content with zero movement */
 @media (prefers-reduced-motion: reduce) {
-  .scroll-reveal {
+  .section-wrapper {
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;
+  }
+  .section-wrapper.is-revealed .section-heading,
+  .section-wrapper.is-revealed .skills-toolbar,
+  .section-wrapper.is-revealed .projects-toolbar,
+  .section-wrapper.is-revealed .about-narrative-col,
+  .section-wrapper.is-revealed .neon-contact-card,
+  .section-wrapper.is-revealed .skills-tiles-grid,
+  .section-wrapper.is-revealed .projects-grid,
+  .section-wrapper.is-revealed .about-stats-col,
+  .section-wrapper.is-revealed .learning-timeline-wrapper,
+  .section-wrapper.is-revealed .contact-info-panel {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
   }
 }
 

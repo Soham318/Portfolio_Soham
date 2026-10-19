@@ -4,9 +4,11 @@ import { ChevronDown, Check, Palette } from 'lucide-react';
 
 /**
  * ThemePicker
- * Accessible selector for the 2 themes:
- * 1. Cyber Neon (Default - as provided in reference image)
- * 2. Daylight (Light alternative)
+ * Accessible, compact dropdown for selecting among 4 curated themes:
+ * 1. Cyber Neon (Default - signature cyan visual identity)
+ * 2. Midnight Aurora
+ * 3. Daylight
+ * 4. Forest Ember
  */
 export function ThemePicker() {
   const { theme, setTheme, themes } = useTheme();

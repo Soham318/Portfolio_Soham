@@ -5,28 +5,36 @@ const STORAGE_KEY = 'soham_portfolio_theme';
 
 const THEME_OPTIONS = [
   { id: 'cyber-neon', label: 'Cyber Neon', icon: '⚡', color: '#00F0FF' },
-  { id: 'light', label: 'Daylight', icon: '☀️', color: '#2563EB' }
+  { id: 'midnight', label: 'Midnight Aurora', icon: '🌌', color: '#8B5CF6' },
+  { id: 'light', label: 'Daylight', icon: '☀️', color: '#2563EB' },
+  { id: 'forest-ember', label: 'Forest Ember', icon: '🌲', color: '#10B981' }
 ];
 
 const THEME_COLOR_META_MAP = {
   'cyber-neon': '#050811',
-  'light': '#F8FAFC'
+  'midnight': '#0B1020',
+  'light': '#F8FAFC',
+  'forest-ember': '#07130F'
 };
 
 export function ThemeProvider({ children }) {
-  // Always default to 'cyber-neon' (the theme provided in the image) on fresh visit.
-  // Respect stored preference from localStorage only if valid between cyber-neon and light.
+  // Default to 'cyber-neon' (signature Cyber Neon visual identity) on fresh visit.
+  // Respect stored preference from localStorage if valid among the 4 themes.
   const [theme, setTheme] = useState(() => {
     if (typeof window === 'undefined') return 'cyber-neon';
     const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored && (stored === 'cyber-neon' || stored === 'light')) {
+    if (stored && ['cyber-neon', 'midnight', 'light', 'forest-ember'].includes(stored)) {
       return stored;
     }
     return 'cyber-neon';
   });
 
   const toggleTheme = () => {
-    setTheme((prev) => (prev === 'cyber-neon' ? 'light' : 'cyber-neon'));
+    setTheme((prev) => {
+      const idx = THEME_OPTIONS.findIndex((t) => t.id === prev);
+      const nextIdx = (idx + 1) % THEME_OPTIONS.length;
+      return THEME_OPTIONS[nextIdx].id;
+    });
   };
 
   // Sync DOM attribute and localStorage whenever theme changes
@@ -47,7 +55,7 @@ export function ThemeProvider({ children }) {
     setTheme,
     toggleTheme,
     themes: THEME_OPTIONS,
-    isDark: theme === 'cyber-neon'
+    isDark: theme !== 'light'
   }), [theme]);
 
   return (

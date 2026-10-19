@@ -1572,74 +1572,182 @@
   font-size: var(--text-sm);
 }
 
-.skills-content-container {
+/* ==========================================================================
+   FEATURE 2: POLISHED TECHNOLOGY TILES GRID
+   Responsive Layout:
+   - Small mobile (< 640px): 2 columns
+   - Tablet (641px - 1024px): 3 columns
+   - Desktop (> 1024px): 4 or 5 columns
+   ========================================================================== */
+.skills-tiles-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--space-4);
+  width: 100%;
+  animation: tilesFadeIn 300ms var(--ease-smooth);
+}
+
+@keyframes tilesFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 1140px) {
+  .skills-tiles-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .skills-tiles-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-3);
+  }
+}
+
+@media (max-width: 580px) {
+  .skills-tiles-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-3);
+  }
+}
+
+/* Individual Technology Tile Card */
+.tech-tile {
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: var(--space-8);
-}
-
-.skills-category-group {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
-}
-
-.skills-category-header {
-  margin-bottom: 2px;
-}
-
-.skills-category-title {
-  font-size: var(--text-base);
-  font-weight: var(--weight-bold);
-  color: var(--text-primary);
-  margin-bottom: 2px;
-}
-
-.skills-category-desc {
-  font-size: var(--text-xs);
-  color: var(--text-muted);
-  margin: 0;
-}
-
-.skills-chips-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
-}
-
-.skill-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 0.45rem 0.85rem;
-  border-radius: var(--radius-md);
+  align-items: flex-start;
+  padding: var(--space-5);
   background-color: var(--bg-surface);
   border: 1px solid var(--border-subtle);
-  color: var(--text-primary);
-  font-size: var(--text-xs);
-  font-weight: var(--weight-medium);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
   cursor: pointer;
-  transition: all var(--duration-fast) var(--ease-smooth);
+  user-select: none;
+  transition: all var(--duration-normal) var(--ease-smooth);
+  outline: none;
+  min-height: 120px;
 }
 
-.skill-chip:hover {
-  border-color: var(--accent-violet);
+.tech-tile:hover {
+  transform: translateY(-4px);
+  border-color: var(--neon-border);
+  box-shadow: 0 10px 24px var(--neon-glow);
   background-color: var(--bg-surface-elevated);
-  transform: translateY(-1px);
 }
 
-.skill-chip.selected {
-  border-color: var(--accent-teal);
-  background-color: var(--accent-teal-soft);
-  color: var(--accent-teal);
-  font-weight: var(--weight-semibold);
+.tech-tile:focus-visible {
+  outline: 2px solid var(--neon-border);
+  outline-offset: 3px;
+  border-color: var(--neon-border);
 }
 
-.skill-chip-project-dot {
+.tech-tile.selected {
+  border-color: var(--neon-border);
+  background: linear-gradient(135deg, var(--bg-surface-elevated) 0%, var(--bg-surface) 100%);
+  box-shadow: 0 0 0 1px var(--neon-border), 0 8px 24px var(--neon-glow);
+}
+
+/* Technology Icon Box */
+.tech-tile-icon-box {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-medium);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-3);
+  transition: all var(--duration-fast) var(--ease-smooth);
+  flex-shrink: 0;
+}
+
+.tech-tile:hover .tech-tile-icon-box {
+  border-color: var(--neon-border);
+  box-shadow: 0 0 14px var(--neon-glow);
+  transform: scale(1.06);
+}
+
+/* Technology Title & Category Meta */
+.tech-tile-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  width: 100%;
+}
+
+.tech-tile-name {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  color: var(--text-primary);
+  line-height: var(--leading-tight);
+}
+
+.tech-tile-category {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  letter-spacing: 0.02em;
+}
+
+/* Linked Project Indicator Badge */
+.tech-tile-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 7px;
+  border-radius: var(--radius-full);
+  background-color: var(--bg-badge);
+  border: 1px solid var(--border-subtle);
+  font-size: 0.65rem;
+  font-weight: var(--weight-medium);
+  color: var(--neon-border);
+}
+
+.tech-tile-dot {
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background-color: var(--accent-blue);
+  background-color: var(--neon-border);
+  box-shadow: 0 0 6px var(--neon-border);
+}
+
+.tech-tile-badge-label {
+  font-family: var(--font-mono);
+}
+
+@media (max-width: 580px) {
+  .tech-tile {
+    padding: var(--space-4);
+    min-height: 105px;
+  }
+  .tech-tile-icon-box {
+    width: 38px;
+    height: 38px;
+    margin-bottom: var(--space-2);
+  }
+  .tech-tile-name {
+    font-size: var(--text-xs);
+  }
+  .tech-tile-category {
+    font-size: 0.65rem;
+  }
+  .tech-tile-badge {
+    top: 7px;
+    right: 7px;
+    padding: 1px 5px;
+  }
 }
 
 /* ==========================================================================

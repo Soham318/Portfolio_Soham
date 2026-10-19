@@ -59,7 +59,7 @@ export function CustomCursor() {
       if (!target || !(target instanceof Element)) return;
 
       const interactive = target.closest(
-        'a, button, [role="button"], input, textarea, select, .skill-chip, .project-mockup-trigger, .scaffold-card, .timeline-node-card'
+        'a, button, [role="button"], input, textarea, select, .tech-tile, .skill-chip, .project-mockup-trigger, .scaffold-card, .timeline-node-card'
       );
 
       if (interactive) {

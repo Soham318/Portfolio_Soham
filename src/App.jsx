@@ -13,6 +13,7 @@ import { Projects } from './components/sections/Projects';
 import { Contact } from './components/sections/Contact';
 import { useScrollSpy } from './hooks/useScrollSpy';
 import { useScrollProgress } from './hooks/useScrollProgress';
+import { useSectionTransitions } from './hooks/useSectionTransitions';
 import './App.css';
 import './components/layout/layout.css';
 import './components/common/common.css';
@@ -23,6 +24,9 @@ export default function App() {
   const activeSection = useScrollSpy(sectionIds, 'home');
   const { isScrolledPast } = useScrollProgress(80);
   const [activeTechFilter, setActiveTechFilter] = useState(null);
+
+  // Bottom-to-top section entrance transitions
+  useSectionTransitions();
 
   const handleSelectSkillForProjects = useCallback((skillName) => {
     setActiveTechFilter(skillName);
