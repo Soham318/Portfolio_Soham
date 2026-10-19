@@ -4,30 +4,30 @@ import { ThemeContext } from './ThemeContext';
 const STORAGE_KEY = 'soham_portfolio_theme';
 
 const THEME_OPTIONS = [
-  { id: 'midnight', label: 'Midnight Aurora', icon: '🌌', color: '#8B5CF6' },
-  { id: 'light', label: 'Daylight', icon: '☀️', color: '#2563EB' },
   { id: 'cyber-neon', label: 'Cyber Neon', icon: '⚡', color: '#00F0FF' },
-  { id: 'forest-ember', label: 'Forest Ember', icon: '🌲', color: '#10B981' }
+  { id: 'light', label: 'Daylight', icon: '☀️', color: '#2563EB' }
 ];
 
 const THEME_COLOR_META_MAP = {
-  'midnight': '#0B1020',
-  'light': '#F8FAFC',
   'cyber-neon': '#050811',
-  'forest-ember': '#07130F'
+  'light': '#F8FAFC'
 };
 
 export function ThemeProvider({ children }) {
-  // Always default to 'midnight' (Midnight Aurora dark mode) on fresh visit.
-  // Respect stored preference from localStorage if valid.
+  // Always default to 'cyber-neon' (the theme provided in the image) on fresh visit.
+  // Respect stored preference from localStorage only if valid between cyber-neon and light.
   const [theme, setTheme] = useState(() => {
-    if (typeof window === 'undefined') return 'midnight';
+    if (typeof window === 'undefined') return 'cyber-neon';
     const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored && ['midnight', 'light', 'cyber-neon', 'forest-ember'].includes(stored)) {
+    if (stored && (stored === 'cyber-neon' || stored === 'light')) {
       return stored;
     }
-    return 'midnight';
+    return 'cyber-neon';
   });
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === 'cyber-neon' ? 'light' : 'cyber-neon'));
+  };
 
   // Sync DOM attribute and localStorage whenever theme changes
   useEffect(() => {
@@ -38,15 +38,16 @@ export function ThemeProvider({ children }) {
     // Update browser theme-color meta tag for mobile browser chrome
     const metaThemeColor = document.querySelector('meta[name="theme-color"]');
     if (metaThemeColor) {
-      metaThemeColor.setAttribute('content', THEME_COLOR_META_MAP[theme] || '#0B1020');
+      metaThemeColor.setAttribute('content', THEME_COLOR_META_MAP[theme] || '#050811');
     }
   }, [theme]);
 
   const value = useMemo(() => ({
     theme,
     setTheme,
+    toggleTheme,
     themes: THEME_OPTIONS,
-    isDark: theme !== 'light'
+    isDark: theme === 'cyber-neon'
   }), [theme]);
 
   return (
