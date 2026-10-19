@@ -1,0 +1,235 @@
+/* ==========================================================================
+   MIDNIGHT AURORA - BASE STYLES & RESET
+   College HCI Mini Project | Accessible, Responsive Foundations
+   ========================================================================== */
+
+@import './tokens.css';
+
+/* --- CSS Reset & Modern Defaults --- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  color-scheme: dark light;
+}
+
+body {
+  min-height: 100vh;
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  background-image: 
+    radial-gradient(circle at 15% 15%, var(--aurora-1) 0%, transparent 45%),
+    radial-gradient(circle at 85% 35%, var(--aurora-2) 0%, transparent 50%),
+    radial-gradient(circle at 50% 80%, var(--aurora-3) 0%, transparent 55%),
+    radial-gradient(var(--pattern-dot) 1px, transparent 1px);
+  background-size: auto, auto, auto, 28px 28px;
+  background-attachment: fixed;
+  background-repeat: no-repeat, no-repeat, no-repeat, repeat;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color var(--duration-normal) var(--ease-smooth),
+              color var(--duration-normal) var(--ease-smooth);
+  overflow-x: hidden;
+}
+
+/* --- Accessibility: Skip to Main Content --- */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: var(--space-4);
+  z-index: var(--z-toast);
+  background: var(--accent-violet);
+  color: #FFFFFF;
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-sm);
+  font-weight: var(--weight-semibold);
+  font-size: var(--text-sm);
+  text-decoration: none;
+  box-shadow: var(--shadow-toast);
+  transition: top var(--duration-fast) var(--ease-smooth);
+}
+
+.skip-link:focus {
+  top: var(--space-4);
+  outline: 3px solid #FFFFFF;
+  outline-offset: 2px;
+}
+
+/* --- Accessibility: Visible Focus Styles (WCAG 2.4.7) --- */
+:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 3px;
+  border-radius: var(--radius-xs);
+}
+
+/* Remove default focus for pointer users, keep visible for keyboard */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* --- Accessibility: Reduced Motion (WCAG 2.3.3) --- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* --- Typography Defaults --- */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-primary);
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-tight);
+  letter-spacing: -0.02em;
+}
+
+h1 { font-size: clamp(2rem, 5vw + 1rem, var(--text-5xl)); }
+h2 { font-size: clamp(1.6rem, 3vw + 0.5rem, var(--text-3xl)); }
+h3 { font-size: clamp(1.25rem, 2vw + 0.3rem, var(--text-2xl)); }
+h4 { font-size: var(--text-xl); }
+h5 { font-size: var(--text-lg); }
+h6 { font-size: var(--text-base); }
+
+p {
+  color: var(--text-secondary);
+  line-height: var(--leading-relaxed);
+  margin-bottom: var(--space-3);
+}
+
+p:last-child {
+  margin-bottom: 0;
+}
+
+a {
+  color: var(--accent-violet);
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--ease-smooth);
+}
+
+a:hover {
+  color: var(--accent-blue);
+}
+
+img, svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+button, input, textarea, select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: transparent;
+}
+
+/* --- Scrollbar Aesthetics --- */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-medium);
+  border-radius: var(--radius-full);
+  border: 2px solid var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-violet);
+}
+
+/* --- Global Layout Utilities --- */
+.container {
+  width: 100%;
+  max-width: var(--container-max-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--space-6);
+  padding-right: var(--space-6);
+  position: relative;
+  z-index: var(--z-base);
+}
+
+.section-wrapper {
+  padding-top: var(--space-20);
+  padding-bottom: var(--space-20);
+  position: relative;
+}
+
+/* Ensure sticky navigation never obscures section headings on hash jumps */
+section[id],
+.section-wrapper[id],
+.hero-section[id] {
+  scroll-margin-top: calc(var(--header-height) + 1.5rem);
+}
+
+/* --- Accessible Scroll Reveal Animation --- */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s var(--ease-smooth),
+              transform 0.6s var(--ease-smooth);
+  will-change: opacity, transform;
+}
+
+.scroll-reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding-left: var(--space-4);
+    padding-right: var(--space-4);
+  }
+  .section-wrapper {
+    padding-top: var(--space-12);
+    padding-bottom: var(--space-12);
+  }
+}
+
+/* --- Screen Reader Only Class (HCI a11y) --- */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

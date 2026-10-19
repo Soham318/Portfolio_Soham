@@ -1,0 +1,314 @@
+/* ==========================================================================
+   COMMON COMPONENT STYLES
+   Buttons, Section Headings, Badges, and Status Indicators
+   ========================================================================== */
+
+/* --- Status Pill (Recruiter Availability) --- */
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radius-full);
+  background-color: var(--bg-surface-elevated);
+  border: 1px solid var(--border-medium);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  color: var(--text-primary);
+  margin-bottom: var(--space-4);
+  box-shadow: var(--shadow-sm);
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--color-success);
+  box-shadow: 0 0 8px var(--color-success);
+}
+
+/* --- Accessible Button System --- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: 0.75rem 1.35rem;
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-smooth);
+  border: 1px solid transparent;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Primary: Electric Violet Gradient */
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent-violet) 0%, var(--accent-blue) 100%);
+  color: #FFFFFF;
+  box-shadow: 0 4px 14px rgba(139, 92, 246, 0.35);
+}
+
+.btn-primary:hover:not(:disabled) {
+  box-shadow: 0 6px 20px rgba(139, 92, 246, 0.5);
+  transform: translateY(-2px);
+  color: #FFFFFF;
+}
+
+.btn-primary:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+/* Secondary: Surface Elevated */
+.btn-secondary {
+  background-color: var(--bg-surface-elevated);
+  color: var(--text-primary);
+  border-color: var(--border-medium);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background-color: var(--bg-surface);
+  border-color: var(--accent-violet);
+  color: var(--accent-violet);
+  transform: translateY(-1px);
+}
+
+/* Outline: Crisp perimeter */
+.btn-outline {
+  background-color: transparent;
+  color: var(--text-primary);
+  border-color: var(--border-medium);
+}
+
+.btn-outline:hover:not(:disabled) {
+  border-color: var(--accent-blue);
+  background-color: var(--accent-blue-soft);
+  color: var(--accent-blue);
+}
+
+/* Ghost: Subdued */
+.btn-ghost {
+  background-color: transparent;
+  color: var(--text-secondary);
+}
+
+.btn-ghost:hover:not(:disabled) {
+  background-color: var(--bg-surface-elevated);
+  color: var(--text-primary);
+}
+
+/* Sizes */
+.btn-sm {
+  padding: 0.5rem 0.875rem;
+  font-size: var(--text-xs);
+}
+
+.btn-lg {
+  padding: 0.95rem 1.75rem;
+  font-size: var(--text-base);
+}
+
+/* --- Section Heading --- */
+.section-heading-container {
+  margin-bottom: var(--space-10);
+  text-align: left;
+}
+
+.section-heading-container.center {
+  text-align: center;
+  max-width: var(--container-narrow-width);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.section-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+  background-color: var(--bg-badge);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-accent);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: var(--space-3);
+}
+
+.section-title {
+  font-size: clamp(1.8rem, 3vw + 0.5rem, var(--text-4xl));
+  margin-bottom: var(--space-3);
+}
+
+.section-subtitle {
+  font-size: var(--text-base);
+  color: var(--text-secondary);
+  line-height: var(--leading-relaxed);
+  max-width: 680px;
+}
+
+.section-heading-container.center .section-subtitle {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* --- Foundation Scaffold Card --- */
+.scaffold-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-8);
+  box-shadow: var(--shadow-card);
+  transition: all var(--duration-normal) var(--ease-smooth);
+  position: relative;
+  overflow: hidden;
+}
+
+.scaffold-card:hover {
+  border-color: var(--border-medium);
+  box-shadow: var(--shadow-card-hover);
+}
+
+/* --- 3D Tilt Card Wrapper & Cursor Ambient Spotlight --- */
+.tilt-card-wrapper {
+  position: relative;
+  transition: transform var(--duration-normal) var(--ease-smooth),
+              box-shadow var(--duration-normal) var(--ease-smooth),
+              border-color var(--duration-normal) var(--ease-smooth);
+  will-change: transform;
+  transform-style: preserve-3d;
+}
+
+.tilt-card-wrapper:hover {
+  border-color: var(--border-medium);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.card-ambient-spotlight {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: var(--card-spotlight-opacity, 0);
+  background: radial-gradient(
+    circle 260px at var(--card-spotlight-x, 50%) var(--card-spotlight-y, 50%),
+    rgba(139, 92, 246, 0.16),
+    rgba(96, 165, 250, 0.08) 45%,
+    transparent 70%
+  );
+  transition: opacity var(--duration-fast) var(--ease-smooth);
+  z-index: 1;
+}
+
+/* --- High-Resolution Project Thumbnails --- */
+.project-thumbnail-wrapper {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin-bottom: var(--space-4);
+  background-color: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  position: relative;
+  isolation: isolate;
+}
+
+.project-thumbnail-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.45s var(--ease-smooth);
+  display: block;
+}
+
+.scaffold-card:hover .project-thumbnail-img,
+.tilt-card-wrapper:hover .project-thumbnail-img {
+  transform: scale(1.06);
+}
+
+.project-thumbnail-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(11, 16, 32, 0.65) 0%,
+    rgba(11, 16, 32, 0.15) 45%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+[data-theme='light'] .project-thumbnail-overlay {
+  background: linear-gradient(
+    to top,
+    rgba(15, 23, 42, 0.45) 0%,
+    rgba(15, 23, 42, 0.10) 45%,
+    transparent 65%
+  );
+}
+
+.project-thumbnail-badge {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  padding: 0.22rem 0.65rem;
+  border-radius: var(--radius-full);
+  background: rgba(11, 16, 32, 0.82);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  font-size: 0.7rem;
+  font-weight: var(--weight-semibold);
+  color: #F8FAFC;
+  letter-spacing: 0.03em;
+  z-index: 2;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme='light'] .project-thumbnail-badge {
+  background: rgba(15, 23, 42, 0.88);
+  color: #FFFFFF;
+}
+
+.scaffold-tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+}
+
+.scaffold-tag {
+  display: inline-flex;
+  align-items: center;
+  font-size: var(--text-xs);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-sm);
+  background-color: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+}
+
+.placeholder-notice {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-xs);
+  color: var(--accent-blue);
+  background: var(--accent-blue-soft);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-4);
+  border: 1px solid rgba(96, 165, 250, 0.25);
+}
