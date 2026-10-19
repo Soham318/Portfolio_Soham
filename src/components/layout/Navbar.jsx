@@ -1,11 +1,10 @@
 import { useState } from 'react';
-import { Menu, Sun, Moon } from 'lucide-react';
-import { useTheme } from '../../hooks/useTheme';
+import { Menu, ArrowUpRight } from 'lucide-react';
 import { NAV_LINKS } from '../../data/navLinks';
 import { MobileNav } from './MobileNav';
+import { ThemePicker } from '../common/ThemePicker';
 
 export function Navbar({ activeSection, isScrolled }) {
-  const { isDark, toggleTheme } = useTheme();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
@@ -16,7 +15,7 @@ export function Navbar({ activeSection, isScrolled }) {
           <span className="brand-badge" aria-hidden="true">SC</span>
           <div className="brand-text">
             <span className="brand-name">Soham Chavan</span>
-            <span className="brand-tag">Computer Engineering</span>
+            <span className="brand-tag">Computer Engineering • VJTI</span>
           </div>
         </a>
 
@@ -37,17 +36,14 @@ export function Navbar({ activeSection, isScrolled }) {
           })}
         </nav>
 
-        {/* Header Actions (Theme Toggle & Mobile Trigger) */}
+        {/* Header Actions (Theme Picker, Let's Talk Pill & Mobile Trigger) */}
         <div className="navbar-actions">
-          <button
-            type="button"
-            className="theme-toggle-btn"
-            onClick={toggleTheme}
-            aria-label={`Switch to ${isDark ? 'light' : 'dark'} theme`}
-            title={`Switch to ${isDark ? 'light' : 'dark'} theme`}
-          >
-            {isDark ? <Sun size={18} aria-hidden="true" /> : <Moon size={18} aria-hidden="true" />}
-          </button>
+          <ThemePicker />
+
+          <a href="#contact" className="navbar-cta-pill" aria-label="Navigate to contact section">
+            <span>Let&apos;s talk</span>
+            <ArrowUpRight size={13} aria-hidden="true" />
+          </a>
 
           <button
             type="button"

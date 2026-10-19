@@ -5,7 +5,7 @@ const CURRENT_YEAR = new Date().getFullYear();
 
 /**
  * Footer
- * Semantic footer with navigation links and professional references.
+ * Semantic footer with navigation links and verified professional channels.
  */
 export function Footer() {
   return (
@@ -18,12 +18,12 @@ export function Footer() {
               <span className="brand-badge" aria-hidden="true">SC</span>
               <div className="brand-text">
                 <span className="brand-name">{profileData.personal.name}</span>
-                <span className="brand-tag">Computer Engineering • VJTI</span>
+                <span className="brand-tag">Computer Engineering (Minor: Cybersecurity) • VJTI</span>
               </div>
             </div>
             <p>
-              Undergraduate portfolio showcasing software projects,
-              backend architectures, and reactive web applications.
+              Undergraduate engineering portfolio showcasing verified software systems,
+              operations research algorithms, and structured architecture concepts.
             </p>
           </div>
 
@@ -31,18 +31,30 @@ export function Footer() {
           <div>
             <h3 className="footer-heading">Navigation</h3>
             <ul className="footer-links">
-              <li><a href="#about" className="footer-link">About Me</a></li>
-              <li><a href="#education" className="footer-link">Education</a></li>
-              <li><a href="#skills" className="footer-link">Technical Skills</a></li>
-              <li><a href="#projects" className="footer-link">Projects</a></li>
-              <li><a href="#experience" className="footer-link">Experience</a></li>
+              <li><a href="#about" className="footer-link">About Profile</a></li>
+              <li><a href="#timeline" className="footer-link">Education & Timeline</a></li>
+              <li><a href="#skills" className="footer-link">Skills & Stack</a></li>
+              <li><a href="#projects" className="footer-link">Projects Showcase</a></li>
+              <li><a href="#contact" className="footer-link">Send a Message</a></li>
             </ul>
           </div>
 
           {/* Professional Links */}
           <div>
-            <h3 className="footer-heading">Connect</h3>
+            <h3 className="footer-heading">Professional Profiles</h3>
             <ul className="footer-links">
+              <li>
+                <a
+                  href="https://www.linkedin.com/in/soham-chavan-1a8339348/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="footer-link"
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+                >
+                  <span>LinkedIn Profile</span>
+                  <ArrowUpRight size={14} aria-hidden="true" />
+                </a>
+              </li>
               <li>
                 <a
                   href="https://github.com/Soham318"
@@ -51,15 +63,22 @@ export function Footer() {
                   className="footer-link"
                   style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}
                 >
-                  <span>GitHub Profile</span>
+                  <span>GitHub Codebases</span>
                   <ArrowUpRight size={14} aria-hidden="true" />
                 </a>
               </li>
               <li>
-                <a href="#resume" className="footer-link">Resume Overview</a>
+                <a
+                  href="mailto:csoham8042@gmail.com"
+                  className="footer-link"
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+                >
+                  <span>csoham8042@gmail.com</span>
+                  <ArrowUpRight size={14} aria-hidden="true" />
+                </a>
               </li>
               <li>
-                <a href="#contact" className="footer-link">Contact Inquiries</a>
+                <a href="#contact" className="footer-link">Contact Inquiry Form</a>
               </li>
             </ul>
           </div>
@@ -69,7 +88,7 @@ export function Footer() {
         <div className="footer-bottom">
           <p>© {CURRENT_YEAR} {profileData.personal.name}. Built with React & Vite.</p>
           <div className="footer-badge">
-            <span>Midnight Aurora Design System</span>
+            <span>Midnight Aurora • Multi-Theme Design System</span>
           </div>
         </div>
       </div>

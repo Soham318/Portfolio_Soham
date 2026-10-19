@@ -1,18 +1,31 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { ThemeContext } from './ThemeContext';
 
 const STORAGE_KEY = 'soham_portfolio_theme';
 
+const THEME_OPTIONS = [
+  { id: 'midnight', label: 'Midnight Aurora', icon: '🌌', color: '#8B5CF6' },
+  { id: 'light', label: 'Daylight', icon: '☀️', color: '#2563EB' },
+  { id: 'cyber-neon', label: 'Cyber Neon', icon: '⚡', color: '#00F0FF' },
+  { id: 'forest-ember', label: 'Forest Ember', icon: '🌲', color: '#10B981' }
+];
+
+const THEME_COLOR_META_MAP = {
+  'midnight': '#0B1020',
+  'light': '#F8FAFC',
+  'cyber-neon': '#050811',
+  'forest-ember': '#07130F'
+};
+
 export function ThemeProvider({ children }) {
-  // Always default to 'midnight' (Midnight Aurora dark mode) on a fresh visit.
-  // If the user has explicitly chosen and stored a preference in localStorage, respect it.
+  // Always default to 'midnight' (Midnight Aurora dark mode) on fresh visit.
+  // Respect stored preference from localStorage if valid.
   const [theme, setTheme] = useState(() => {
     if (typeof window === 'undefined') return 'midnight';
     const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored === 'light' || stored === 'midnight') {
+    if (stored && ['midnight', 'light', 'cyber-neon', 'forest-ember'].includes(stored)) {
       return stored;
     }
-    // Fresh visit default: Midnight Aurora dark mode
     return 'midnight';
   });
 
@@ -25,17 +38,19 @@ export function ThemeProvider({ children }) {
     // Update browser theme-color meta tag for mobile browser chrome
     const metaThemeColor = document.querySelector('meta[name="theme-color"]');
     if (metaThemeColor) {
-      metaThemeColor.setAttribute('content', theme === 'midnight' ? '#0B1020' : '#F8FAFC');
+      metaThemeColor.setAttribute('content', THEME_COLOR_META_MAP[theme] || '#0B1020');
     }
   }, [theme]);
 
-  // Toggle helper function
-  const toggleTheme = () => {
-    setTheme((prevTheme) => (prevTheme === 'midnight' ? 'light' : 'midnight'));
-  };
+  const value = useMemo(() => ({
+    theme,
+    setTheme,
+    themes: THEME_OPTIONS,
+    isDark: theme !== 'light'
+  }), [theme]);
 
   return (
-    <ThemeContext.Provider value={{ theme, setTheme, toggleTheme, isDark: theme === 'midnight' }}>
+    <ThemeContext.Provider value={value}>
       {children}
     </ThemeContext.Provider>
   );

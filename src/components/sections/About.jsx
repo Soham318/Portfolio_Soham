@@ -1,39 +1,55 @@
-import { Laptop, Sparkles } from 'lucide-react';
+import { Laptop, Sparkles, GraduationCap, Award, Code2, Users } from 'lucide-react';
 import { SectionHeading } from '../common/SectionHeading';
 import { profileData } from '../../data/profileData';
 import aboutWorkspaceImg from '../../assets/images/about_workspace.jpg';
 
 /**
  * About Section
- * Professional overview displaying verified VJTI academic profile, technical focus,
- * and an authentic developer workstation visual supporting element.
+ * Editorial profile presenting Soham's engineering background, VJTI coursework,
+ * problem-solving philosophy, and verified developer environment.
  */
 export function About() {
-  const { personal, education } = profileData;
+  const { personal } = profileData;
 
   return (
     <section id="about" className="section-wrapper" aria-labelledby="about-heading">
       <div className="container">
         <SectionHeading
           id="about-heading"
-          eyebrow="01 // BACKGROUND"
-          title="About Me"
-          subtitle="Academic orientation, engineering interests, and career objective."
+          eyebrow="01 // EDITORIAL PROFILE"
+          title="Curiosity Grounded in Engineering Fundamentals"
+          subtitle="Transforming conceptual logic into reliable software through rigorous problem-solving, clean architecture, and continuous learning."
         />
 
-        <div className="about-grid">
-          {/* Left Column: Narrative Card & Supporting Workspace Visual */}
-          <div className="about-left-col">
-            <div className="about-main-card">
-              <p className="about-paragraph">{personal.bio}</p>
+        <div className="about-editorial-grid">
+          {/* Left Column: Editorial Narrative & Blockquote */}
+          <div className="about-narrative-col">
+            {/* Editorial Blockquote (Inspired by Reference Screenshot 2) */}
+            <blockquote className="editorial-quote-box">
+              <span className="quote-mark" aria-hidden="true">&ldquo;</span>
+              <p className="quote-text">{personal.editorialQuote}</p>
+            </blockquote>
+
+            <div className="about-narrative-card">
               <p className="about-paragraph">
-                Currently focused on building full-stack web applications and backend services with technologies
-                such as Node.js, Express, MongoDB, and SQLite, while exploring machine learning frameworks and
-                advancing my frontend skills with React.
+                I am <strong>Soham Umesh Chavan</strong>, a Computer Engineering undergraduate at{' '}
+                <strong>Veermata Jijabai Technological Institute (VJTI)</strong>, Mumbai. I enjoy building
+                practical software, exploring <strong>full-stack web architectures</strong>, and studying
+                algorithms to understand how computational models solve real-world logistical and operational challenges.
+              </p>
+              <p className="about-paragraph">
+                From developing <strong>OpportunityHub</strong>—a full-stack contest aggregation platform built on the MERN stack—to
+                collaborating on <strong>operations research transportation routing algorithms</strong> using Python, I prioritize
+                genuine code quality, maintainable patterns, and clear separation of concerns.
+              </p>
+              <p className="about-paragraph">
+                Beyond independent development, I participated in the <strong>Agastya Foundation mentorship program</strong>{' '}
+                associated with the <strong>JPMorgan Chase</strong> initiative, and actively sharpen my algorithmic thinking
+                with over <strong>350+ problems solved</strong> across LeetCode and GeeksforGeeks.
               </p>
             </div>
 
-            {/* Supporting Developer Environment Visual Card */}
+            {/* Developer Workstation Setup Visual */}
             <div className="about-workspace-card">
               <div className="about-workspace-image-wrapper">
                 <img
@@ -48,57 +64,65 @@ export function About() {
                 <div className="about-workspace-overlay" aria-hidden="true" />
                 <div className="about-workspace-caption">
                   <Laptop size={13} aria-hidden="true" />
-                  <span>Development Environment • Terminal & Code Workflows</span>
+                  <span>Development Environment • Terminal, Git & VS Code Workflows</span>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Right Column: Profile Snapshot Card & Engineering Pillars */}
-          <div className="about-right-col">
-            <div className="about-side-card">
-              <h3 style={{ fontSize: 'var(--text-lg)', marginBottom: '1.25rem', color: 'var(--text-primary)' }}>
-                Profile Snapshot
-              </h3>
-
-              <ul className="about-info-list">
-                <li className="about-info-item">
-                  <span className="about-info-label">Degree</span>
-                  <span className="about-info-value">{education.degree}</span>
-                </li>
-                <li className="about-info-item">
-                  <span className="about-info-label">Institution</span>
-                  <span className="about-info-value">{education.institution}</span>
-                </li>
-                <li className="about-info-item">
-                  <span className="about-info-label">Primary Goal</span>
-                  <span className="about-info-value">{personal.goal}</span>
-                </li>
-                <li className="about-info-item">
-                  <span className="about-info-label">Verified Profile</span>
-                  <a
-                    href="https://github.com/Soham318"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="about-info-value"
-                    style={{ color: 'var(--accent-blue)', textDecoration: 'none' }}
-                  >
-                    github.com/Soham318
-                  </a>
-                </li>
-              </ul>
+          {/* Right Column: Profile Snapshot Metric Cards */}
+          <div className="about-metrics-col">
+            {/* Degree Card */}
+            <div className="snapshot-stat-card">
+              <div className="snapshot-stat-top">
+                <GraduationCap size={16} className="snapshot-stat-icon" aria-hidden="true" />
+                <span className="scaffold-tag">Degree & VJTI</span>
+              </div>
+              <h3 className="snapshot-stat-value">B.Tech Comp Eng</h3>
+              <p className="snapshot-stat-desc">VJTI Mumbai • Minor in Cybersecurity</p>
             </div>
 
-            {/* Supporting Focus Highlight */}
+            {/* Academic Rank Card */}
+            <div className="snapshot-stat-card">
+              <div className="snapshot-stat-top">
+                <Award size={16} className="snapshot-stat-icon" aria-hidden="true" />
+                <span className="scaffold-tag">State Rank</span>
+              </div>
+              <h3 className="snapshot-stat-value">Rank 450</h3>
+              <p className="snapshot-stat-desc">MHT-CET: 99.80 %ile • JEE Main: 98.50 %ile</p>
+            </div>
+
+            {/* CP Solved Card */}
+            <div className="snapshot-stat-card">
+              <div className="snapshot-stat-top">
+                <Code2 size={16} className="snapshot-stat-icon" aria-hidden="true" />
+                <span className="scaffold-tag">DSA Solving</span>
+              </div>
+              <h3 className="snapshot-stat-value">350+ Solved</h3>
+              <p className="snapshot-stat-desc">LeetCode & GeeksforGeeks practice</p>
+            </div>
+
+            {/* Mentorship Card */}
+            <div className="snapshot-stat-card">
+              <div className="snapshot-stat-top">
+                <Users size={16} className="snapshot-stat-icon" aria-hidden="true" />
+                <span className="scaffold-tag">Mentorship</span>
+              </div>
+              <h3 className="snapshot-stat-value">Agastya Program</h3>
+              <p className="snapshot-stat-desc">Associated with JPMorgan CSR Initiative</p>
+            </div>
+
+            {/* Core CS Discipline */}
             <div className="about-focus-card">
               <div className="about-focus-header">
                 <Sparkles size={16} style={{ color: 'var(--accent-teal)' }} aria-hidden="true" />
                 <h4 style={{ fontSize: 'var(--text-sm)', color: 'var(--text-primary)', margin: 0 }}>
-                  Academic & Technical Discipline
+                  Engineering Rigor
                 </h4>
               </div>
               <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-secondary)', margin: 0, lineHeight: 'var(--leading-relaxed)' }}>
-                Applying computer science theory—from data structures and algorithm analysis to database normalization and operating systems fundamentals—into functional, maintainable code.
+                Grounding practical software implementations in foundational computer engineering principles:
+                data structure optimization, algorithm complexity analysis, database normalization, and robust API contracts.
               </p>
             </div>
           </div>
