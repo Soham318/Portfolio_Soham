@@ -101,6 +101,66 @@
   transition: opacity var(--duration-normal) var(--ease-smooth);
 }
 
+/* ==========================================================================
+   HERO TEXT RISE ANIMATION (Dhruv Lad Inspired Physical Entrance)
+   Text and card elements physically rise from 25–40px below with a smooth
+   ease-out curve, staggered sequentially.
+   ========================================================================== */
+.hero-rise-item {
+  animation: heroRiseUp 680ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: transform, opacity;
+}
+
+@keyframes heroRiseUp {
+  0% {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Stagger sequence (approx 80–120ms intervals) */
+.hero-rise-intro {
+  animation-delay: 40ms;
+}
+
+.hero-rise-name {
+  animation-duration: 720ms;
+  animation-delay: 140ms;
+}
+
+.hero-rise-headline {
+  animation-delay: 240ms;
+}
+
+.hero-rise-desc {
+  animation-delay: 340ms;
+}
+
+.hero-rise-actions {
+  animation-delay: 440ms;
+}
+
+.hero-rise-metrics {
+  animation-delay: 540ms;
+}
+
+.hero-rise-card {
+  animation-duration: 740ms;
+  animation-delay: 300ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-rise-item {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
 .hero-grid {
   display: grid;
   grid-template-columns: 1.25fr 0.85fr;
@@ -1634,6 +1694,19 @@
   transition: all var(--duration-normal) var(--ease-smooth);
   outline: none;
   min-height: 120px;
+  animation: techTileEntrance 380ms var(--ease-smooth) backwards;
+  animation-delay: calc(var(--tile-stagger, 0) * 35ms);
+}
+
+@keyframes techTileEntrance {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .tech-tile:hover {
@@ -1805,12 +1878,33 @@
   border-radius: var(--radius-xl);
   padding: var(--space-8);
   box-shadow: var(--shadow-card);
-  transition: all var(--duration-normal) var(--ease-smooth);
+  transition: transform var(--duration-normal) var(--ease-smooth),
+              box-shadow var(--duration-normal) var(--ease-smooth),
+              border-color var(--duration-normal) var(--ease-smooth),
+              background-color var(--duration-normal) var(--ease-smooth);
 }
 
-.project-editorial-card:hover {
-  border-color: var(--border-medium);
-  box-shadow: var(--shadow-card-hover);
+.project-editorial-card:hover,
+.project-editorial-card:focus-within {
+  border-color: var(--accent-blue);
+  box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.45), var(--shadow-glow-blue);
+  transform: translateY(-5px);
+}
+
+.project-editorial-card:hover .browser-mockup-frame,
+.project-editorial-card:focus-within .browser-mockup-frame {
+  border-color: var(--accent-blue);
+  box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.5), 0 0 20px -4px var(--accent-blue-soft);
+}
+
+.project-editorial-card:hover .browser-mockup-img,
+.project-editorial-card:focus-within .browser-mockup-img {
+  transform: scale(1.035);
+}
+
+.project-editorial-card:hover .project-title,
+.project-editorial-card:focus-within .project-title {
+  color: var(--accent-blue);
 }
 
 .project-editorial-card.layout-reversed {
@@ -1976,13 +2070,180 @@
 }
 
 /* ==========================================================================
-   ANIMATED LEARNING & EDUCATION TIMELINE
+   ANIMATED LEARNING & EDUCATION TIMELINE (Interactive with Sticky Year Indicator)
    ========================================================================== */
+.timeline-interactive-container {
+  display: grid;
+  grid-template-columns: 290px 1fr;
+  gap: var(--space-8);
+  align-items: start;
+  margin-top: var(--space-8);
+  position: relative;
+}
+
+/* Sticky Year Indicator Rail */
+.timeline-year-rail {
+  position: sticky;
+  top: calc(var(--header-height) + 2.5rem);
+  z-index: 10;
+}
+
+.sticky-year-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-card);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  transition: all var(--duration-normal) var(--ease-smooth);
+}
+
+.year-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-3);
+}
+
+.year-card-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.68rem;
+  font-weight: var(--weight-bold);
+  font-family: var(--font-mono);
+  color: var(--accent-blue);
+  letter-spacing: 0.08em;
+}
+
+.year-card-counter {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: var(--weight-bold);
+  color: var(--text-muted);
+}
+
+.year-display-box {
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  margin-bottom: var(--space-3);
+}
+
+.year-number-animated {
+  font-size: clamp(1.75rem, 2.2vw, 2.15rem);
+  font-weight: var(--weight-extrabold);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-blue) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: yearSlideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes yearSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.year-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: var(--space-4);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.year-card-title {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  color: var(--text-primary);
+  margin: 0;
+  line-height: var(--leading-snug);
+}
+
+.year-card-inst {
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.year-card-badge {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: var(--weight-bold);
+  color: var(--accent-teal);
+  margin-top: 2px;
+}
+
+.year-milestone-dots {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.milestone-dot-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: transparent;
+  border: none;
+  padding: 6px 8px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  text-align: left;
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  font-family: var(--font-mono);
+  transition: all var(--duration-fast) var(--ease-smooth);
+}
+
+.milestone-dot-btn:hover {
+  color: var(--text-primary);
+  background-color: var(--bg-surface-elevated);
+}
+
+.milestone-dot-btn.is-active {
+  color: var(--accent-blue);
+  font-weight: var(--weight-bold);
+  background-color: var(--accent-blue-soft);
+}
+
+.dot-circle {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: var(--border-medium);
+  transition: all 0.25s var(--ease-smooth);
+  flex-shrink: 0;
+}
+
+.milestone-dot-btn.is-active .dot-circle {
+  background-color: var(--accent-blue);
+  transform: scale(1.35);
+  box-shadow: 0 0 8px var(--accent-blue);
+}
+
+.milestone-dot-btn.is-past:not(.is-active) .dot-circle {
+  background-color: var(--accent-teal);
+}
+
+/* Timeline Center Tree */
 .learning-timeline-wrapper {
   position: relative;
-  max-width: 920px;
+  max-width: 820px;
+  width: 100%;
   margin: 0 auto;
-  padding: var(--space-6) 0;
+  padding: var(--space-4) 0;
 }
 
 /* Background Track Line */
@@ -2007,7 +2268,7 @@
   transform: translateX(-50%);
   z-index: 2;
   box-shadow: 0 0 10px var(--accent-blue);
-  transition: height 0.2s linear;
+  transition: height 0.12s linear;
   max-height: calc(100% - 70px);
 }
 
@@ -2022,27 +2283,32 @@
   position: relative;
   width: 50%;
   padding-bottom: var(--space-10);
-  opacity: 0.25;
-  transform: translateY(24px);
-  transition: opacity 0.5s var(--ease-smooth),
-              transform 0.5s var(--ease-spring);
-}
-
-.timeline-tree-node.is-visible {
-  opacity: 1;
-  transform: translateY(0);
+  opacity: 0.35;
+  transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .node-left {
   left: 0;
   padding-right: var(--space-8);
   text-align: right;
+  transform: translate3d(-18px, 24px, 0);
 }
 
 .node-right {
   left: 50%;
   padding-left: var(--space-8);
   text-align: left;
+  transform: translate3d(18px, 24px, 0);
+}
+
+.timeline-tree-node.is-revealed {
+  opacity: 0.85;
+  transform: translate3d(0, 0, 0);
+}
+
+.timeline-tree-node.node-current {
+  opacity: 1;
 }
 
 .timeline-node-pin {
@@ -2059,14 +2325,26 @@
   color: var(--text-muted);
   box-shadow: var(--shadow-sm);
   z-index: 4;
-  transition: all 0.35s var(--ease-spring);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .timeline-node-pin.active {
   border-color: var(--accent-blue);
   color: var(--accent-blue);
   box-shadow: 0 0 16px var(--shadow-glow-blue);
-  transform: scale(1.1);
+  transform: scale(1.15);
+}
+
+.pin-education.active {
+  border-color: var(--accent-blue);
+  color: var(--accent-blue);
+  box-shadow: 0 0 16px var(--shadow-glow-blue);
+}
+
+.pin-learning.active {
+  border-color: var(--accent-teal);
+  color: var(--accent-teal);
+  box-shadow: 0 0 16px rgba(45, 212, 191, 0.35);
 }
 
 .pin-pulse {
@@ -2103,17 +2381,38 @@
   border-radius: var(--radius-lg);
   padding: var(--space-6);
   box-shadow: var(--shadow-sm);
-  transition: all var(--duration-fast) var(--ease-smooth);
+  transition: all var(--duration-normal) var(--ease-smooth);
+  position: relative;
 }
 
-.timeline-tree-node.is-visible .timeline-node-card {
+.card-education {
+  border-left: 3px solid var(--accent-blue);
+}
+
+.node-left .card-education {
+  border-left: 1px solid var(--border-subtle);
+  border-right: 3px solid var(--accent-blue);
+}
+
+.card-learning {
+  border-left: 3px solid var(--accent-teal);
+}
+
+.node-left .card-learning {
+  border-left: 1px solid var(--border-subtle);
+  border-right: 3px solid var(--accent-teal);
+}
+
+.timeline-tree-node.node-current .timeline-node-card {
   border-color: var(--border-medium);
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-2px);
 }
 
 .timeline-node-card:hover {
   border-color: var(--accent-blue);
   box-shadow: var(--shadow-card-hover);
-  transform: translateY(-2px);
+  transform: translateY(-4px);
 }
 
 .timeline-node-header {
@@ -2129,6 +2428,30 @@
   flex-direction: row-reverse;
 }
 
+.tag-education {
+  background-color: var(--accent-blue-soft);
+  color: var(--accent-blue);
+  border: 1px solid rgba(96, 165, 250, 0.3);
+}
+
+.tag-learning {
+  background-color: var(--accent-teal-soft);
+  color: var(--accent-teal);
+  border: 1px solid rgba(45, 212, 191, 0.3);
+  font-family: var(--font-mono);
+}
+
+.timeline-year-pill {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: var(--weight-bold);
+  color: var(--text-primary);
+  background-color: var(--bg-surface-elevated);
+  padding: 0.2rem 0.65rem;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-subtle);
+}
+
 .timeline-score-pill {
   font-family: var(--font-mono);
   font-size: 0.75rem;
@@ -2137,6 +2460,9 @@
   background-color: var(--accent-teal-soft);
   padding: 0.2rem 0.65rem;
   border-radius: var(--radius-full);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .timeline-node-title {
@@ -2158,6 +2484,27 @@
   color: var(--text-secondary);
   line-height: var(--leading-relaxed);
   margin: 0;
+  margin-bottom: var(--space-3);
+}
+
+.timeline-node-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.node-left .timeline-node-footer {
+  flex-direction: row-reverse;
+}
+
+.timeline-type-label {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-style: italic;
 }
 
 /* ==========================================================================
@@ -2577,9 +2924,52 @@
   border-radius: var(--radius-full);
 }
 
-/* --------------------------------------------------------------------------
-   RESPONSIVE LAYOUT ADJUSTMENTS
-   -------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+  .timeline-interactive-container {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+  .timeline-year-rail {
+    position: sticky;
+    top: calc(var(--header-height) + 8px);
+    z-index: 20;
+    width: 100%;
+  }
+  .sticky-year-card {
+    padding: 0.65rem 1rem;
+    border-radius: var(--radius-md);
+  }
+  .year-milestone-dots {
+    display: none;
+  }
+  .year-display-box {
+    min-height: 36px;
+    margin-bottom: 0;
+  }
+  .year-number-animated {
+    font-size: 1.35rem;
+  }
+  .year-card-body {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+  .year-card-title {
+    font-size: var(--text-xs);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 220px;
+  }
+  .year-card-inst {
+    display: none;
+  }
+}
+
 @media (max-width: 900px) {
   .hero-grid {
     grid-template-columns: 1fr;
@@ -2689,9 +3079,18 @@
   .project-editorial-card,
   .editorial-profile-frame,
   .modal-dialog,
-  .modal-backdrop {
+  .modal-backdrop,
+  .timeline-node-card {
     transform: none !important;
     transition: none !important;
+    animation: none !important;
+    opacity: 1 !important;
+  }
+  .timeline-progress-fill {
+    height: 100% !important;
+    transition: none !important;
+  }
+  .sticky-year-display {
     animation: none !important;
   }
 }

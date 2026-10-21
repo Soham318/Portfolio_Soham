@@ -14,6 +14,10 @@ import { useEffect } from 'react';
  */
 export function useSectionTransitions() {
   useEffect(() => {
+    if (typeof document !== 'undefined') {
+      document.documentElement.classList.add('js-ready');
+    }
+
     // 1. Reduced motion check
     const prefersReduced =
       typeof window !== 'undefined' &&
@@ -21,9 +25,11 @@ export function useSectionTransitions() {
       window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     const sections = Array.from(document.querySelectorAll('.section-wrapper, .hero-section'));
+    const revealElements = Array.from(document.querySelectorAll('.reveal-on-scroll'));
 
     if (prefersReduced) {
       sections.forEach((sec) => sec.classList.add('is-revealed'));
+      revealElements.forEach((el) => el.classList.add('is-revealed'));
       return;
     }
 
@@ -55,6 +61,16 @@ export function useSectionTransitions() {
       }
     });
 
+    revealElements.forEach((el) => {
+      // If inside hero or already visible near top, reveal immediately
+      const rect = el.getBoundingClientRect();
+      if (rect.top <= window.innerHeight * 0.85) {
+        el.classList.add('is-revealed');
+      } else {
+        observer.observe(el);
+      }
+    });
+
     // 4. Handle browser back/forward and hash changes
     const handleHashChange = () => {
       const currentHash = window.location.hash.replace('#', '');
@@ -62,6 +78,7 @@ export function useSectionTransitions() {
         const target = document.getElementById(currentHash);
         if (target) {
           target.classList.add('is-revealed');
+          target.querySelectorAll('.reveal-on-scroll').forEach((el) => el.classList.add('is-revealed'));
         }
       }
     };

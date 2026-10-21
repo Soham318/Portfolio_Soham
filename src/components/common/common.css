@@ -51,6 +51,14 @@
   pointer-events: none;
 }
 
+.btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
 /* Primary: Electric Violet Gradient */
 .btn-primary {
   background: linear-gradient(135deg, var(--accent-violet) 0%, var(--accent-blue) 100%);
@@ -79,7 +87,8 @@
   background-color: var(--bg-surface);
   border-color: var(--accent-violet);
   color: var(--accent-violet);
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px var(--accent-violet-soft);
 }
 
 /* Outline: Crisp perimeter */
@@ -93,6 +102,8 @@
   border-color: var(--accent-blue);
   background-color: var(--accent-blue-soft);
   color: var(--accent-blue);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px var(--accent-blue-soft);
 }
 
 /* Ghost: Subdued */
@@ -104,6 +115,7 @@
 .btn-ghost:hover:not(:disabled) {
   background-color: var(--bg-surface-elevated);
   color: var(--text-primary);
+  transform: translateY(-1px);
 }
 
 /* Sizes */
@@ -298,6 +310,14 @@
   background-color: var(--bg-surface-elevated);
   border: 1px solid var(--border-subtle);
   color: var(--text-secondary);
+  transition: all var(--duration-fast) var(--ease-smooth);
+}
+
+.scaffold-tag:hover {
+  border-color: var(--border-medium);
+  color: var(--text-primary);
+  background-color: var(--bg-surface);
+  transform: translateY(-1px);
 }
 
 .placeholder-notice {

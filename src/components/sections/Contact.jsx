@@ -115,7 +115,7 @@ export function Contact() {
 
         <div className="contact-section-layout">
           {/* Neon Styled Contact Form (Inspired by User's Supplied Screenshot) */}
-          <div className="neon-contact-card">
+          <div className="neon-contact-card reveal-on-scroll">
             {/* Upper Left Neon Block Accent */}
             <div className="neon-corner-tab" aria-hidden="true" />
             <div className="neon-corner-tick" aria-hidden="true" />
@@ -287,7 +287,7 @@ export function Contact() {
 
           {/* Side Contact & Verified Channels Card */}
           <div className="contact-info-panel">
-            <div className="contact-info-card">
+            <div className="contact-info-card reveal-on-scroll reveal-stagger-1">
               <span className="scaffold-tag" style={{ color: 'var(--accent-blue)', marginBottom: '1rem' }}>
                 Verified Channels
               </span>

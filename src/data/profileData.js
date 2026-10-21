@@ -156,83 +156,58 @@ export const profileData = {
   timelineMilestones: [
     {
       id: "milestone-1",
-      category: "Academic Foundation",
-      stage: "Secondary School",
-      title: "Class 10 (Secondary School Certificate)",
-      institution: "S.M. High School, Kavathe Mahankal",
-      score: "96.20%",
-      badge: "Class 10",
-      description: "Built strong mathematical and analytical foundations, scoring 96.20% in secondary board examinations."
+      year: "2013–2022",
+      type: "education",
+      category: "School Education",
+      title: "S.M. High School, Kavathe Mahankal",
+      institution: "Foundational School Education",
+      score: "Class 10: 96.20%",
+      badge: "School Education",
+      description: "Completed secondary school education with academic excellence, achieving 96.20% in the Class 10 board examinations."
     },
     {
       id: "milestone-2",
-      category: "Higher Secondary",
-      stage: "Higher Secondary",
-      title: "Class 12 (Higher Secondary Certificate)",
-      institution: "S.B.G. High School and Junior College, Kavathe Mahankal",
-      score: "86.83%",
-      badge: "Class 12",
-      description: "Completed higher secondary coursework with focus on Advanced Mathematics, Physics, and analytical sciences."
+      year: "2023–2024",
+      type: "education",
+      category: "Higher Secondary Education",
+      title: "S.B.G. High School and Junior College, Kavathe Mahankal",
+      institution: "Class 12 Junior College Education",
+      score: "Class 12: 86.83%",
+      badge: "Higher Secondary",
+      description: "Completed Class 12 higher secondary education with 86.83%, building a deep focus on Advanced Mathematics, Physics, and analytical sciences."
     },
     {
       id: "milestone-3",
-      category: "Competitive Milestones",
-      stage: "Entrance Examinations",
-      title: "MHT-CET Rank 450 & JEE Main",
+      year: "2024",
+      type: "education",
+      category: "Entrance Examinations",
+      title: "MHT-CET and JEE Main",
       institution: "State & National Engineering Entrances",
       score: "CET: 99.80 %ile (Rank 450) • JEE: 98.50 %ile",
-      badge: "Rank 450",
-      description: "Secured 99.80 percentile (State Rank 450) in MHT-CET and 98.50 percentile in JEE Main, qualifying for VJTI Computer Engineering."
+      badge: "Rank 450 • 99.80 %ile",
+      description: "Secured 99.80 percentile with State Rank 450 in MHT-CET, alongside a 98.50 percentile in JEE Main, qualifying for VJTI Mumbai Computer Engineering."
     },
     {
       id: "milestone-4",
-      category: "Undergraduate Degree",
-      stage: "Undergraduate Engineering",
-      title: "B.Tech in Computer Engineering (Minor in Cybersecurity)",
-      institution: "Veermata Jijabai Technological Institute (VJTI), Mumbai",
-      score: "Current Undergraduate",
-      badge: "VJTI Mumbai",
-      description: "Admitted to VJTI's premier Computer Engineering department; enrolled in core CS disciplines and pursuing an Academic Minor in Cybersecurity."
+      year: "2025",
+      type: "learning",
+      category: "Self-Directed Learning",
+      title: "Node.js Backend Development",
+      institution: "Self-Directed Technical Learning",
+      score: "Server-Side & APIs",
+      badge: "Self-Directed Learning",
+      description: "Dedicated self-directed technical learning focusing on server-side development, RESTful APIs, authentication workflows, and core backend concepts."
     },
     {
       id: "milestone-5",
-      category: "Learning Milestone",
-      stage: "Frontend Architecture",
-      title: "Web Development & React Engineering",
-      institution: "Component Design & Reactive Frameworks",
-      score: "Component Architecture",
-      badge: "React & Modern JS",
-      description: "Mastered responsive HTML5, modern CSS custom properties, JavaScript ES6+, and React component architecture with hooks, state management, and WCAG accessibility standards."
-    },
-    {
-      id: "milestone-6",
-      category: "Learning Milestone",
-      stage: "Backend & Systems",
-      title: "Node.js, Express.js & REST APIs",
-      institution: "Server-Side Engineering",
-      score: "API & Middleware",
-      badge: "Node.js & Express",
-      description: "Engineered scalable REST APIs, JWT authentication layers, Multer file processing, and asynchronous server-side middleware pipelines."
-    },
-    {
-      id: "milestone-7",
-      category: "Learning Milestone",
-      stage: "Data Tier & Persistence",
-      title: "Backend Development & Databases",
-      institution: "Document & Relational Persistence",
-      score: "MongoDB & SQLite",
-      badge: "Databases & Schemas",
-      description: "Architected normalized relational schemas and document models with SQLite and MongoDB, focusing on indexing, query efficiency, and data integrity."
-    },
-    {
-      id: "milestone-8",
-      category: "Project & Software Systems",
-      stage: "Active Engineering",
-      title: "Software Projects & Competitive Problem Solving",
-      institution: "OpportunityHub • Logistics Routing • 350+ DSA",
-      score: "350+ DSA Solved",
-      badge: "Active Projects",
-      description: "Shipped OpportunityHub hackathon aggregator, co-developed operations research routing optimization in Python, and solved 350+ DSA problems across LeetCode and GeeksforGeeks."
+      year: "2026",
+      type: "learning",
+      category: "Software Projects & CP",
+      title: "Software Projects and Competitive Programming",
+      institution: "Personal Engineering & Algorithms",
+      score: "Projects & Problem Solving",
+      badge: "Applied Software",
+      description: "Developing personal software projects, including OpportunityHub, collaborating on a transportation-routing optimization project, and continuing competitive programming and problem-solving."
     }
   ],
 

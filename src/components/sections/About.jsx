@@ -25,12 +25,12 @@ export function About() {
           {/* Left Column: Editorial Narrative & Blockquote */}
           <div className="about-narrative-col">
             {/* Editorial Blockquote (Inspired by Reference Screenshot 2) */}
-            <blockquote className="editorial-quote-box">
+            <blockquote className="editorial-quote-box reveal-on-scroll">
               <span className="quote-mark" aria-hidden="true">&ldquo;</span>
               <p className="quote-text">{personal.editorialQuote}</p>
             </blockquote>
 
-            <div className="about-narrative-card">
+            <div className="about-narrative-card reveal-on-scroll reveal-stagger-1">
               <p className="about-paragraph">
                 I am <strong>Soham Umesh Chavan</strong>, a Computer Engineering undergraduate at{' '}
                 <strong>Veermata Jijabai Technological Institute (VJTI)</strong>, Mumbai. I enjoy building
@@ -50,7 +50,7 @@ export function About() {
             </div>
 
             {/* Developer Workstation Setup Visual */}
-            <div className="about-workspace-card">
+            <div className="about-workspace-card reveal-on-scroll reveal-stagger-2">
               <div className="about-workspace-image-wrapper">
                 <img
                   src={aboutWorkspaceImg}
@@ -73,7 +73,7 @@ export function About() {
           {/* Right Column: Profile Snapshot Metric Cards */}
           <div className="about-metrics-col">
             {/* Degree Card */}
-            <div className="snapshot-stat-card">
+            <div className="snapshot-stat-card reveal-on-scroll">
               <div className="snapshot-stat-top">
                 <GraduationCap size={16} className="snapshot-stat-icon" aria-hidden="true" />
                 <span className="scaffold-tag">Degree & VJTI</span>
@@ -83,7 +83,7 @@ export function About() {
             </div>
 
             {/* Academic Rank Card */}
-            <div className="snapshot-stat-card">
+            <div className="snapshot-stat-card reveal-on-scroll reveal-stagger-1">
               <div className="snapshot-stat-top">
                 <Award size={16} className="snapshot-stat-icon" aria-hidden="true" />
                 <span className="scaffold-tag">State Rank</span>
@@ -93,7 +93,7 @@ export function About() {
             </div>
 
             {/* CP Solved Card */}
-            <div className="snapshot-stat-card">
+            <div className="snapshot-stat-card reveal-on-scroll reveal-stagger-2">
               <div className="snapshot-stat-top">
                 <Code2 size={16} className="snapshot-stat-icon" aria-hidden="true" />
                 <span className="scaffold-tag">DSA Solving</span>
@@ -103,7 +103,7 @@ export function About() {
             </div>
 
             {/* Mentorship Card */}
-            <div className="snapshot-stat-card">
+            <div className="snapshot-stat-card reveal-on-scroll reveal-stagger-3">
               <div className="snapshot-stat-top">
                 <Users size={16} className="snapshot-stat-icon" aria-hidden="true" />
                 <span className="scaffold-tag">Mentorship</span>
@@ -113,7 +113,7 @@ export function About() {
             </div>
 
             {/* Core CS Discipline */}
-            <div className="about-focus-card">
+            <div className="about-focus-card reveal-on-scroll reveal-stagger-4">
               <div className="about-focus-header">
                 <Sparkles size={16} style={{ color: 'var(--accent-teal)' }} aria-hidden="true" />
                 <h4 style={{ fontSize: 'var(--text-sm)', color: 'var(--text-primary)', margin: 0 }}>

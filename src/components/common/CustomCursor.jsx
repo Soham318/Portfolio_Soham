@@ -29,7 +29,7 @@ export function CustomCursor() {
 
     const handleMouseMove = (e) => {
       mousePos.current = { x: e.clientX, y: e.clientY };
-      if (!isVisible) setIsVisible(true);
+      setIsVisible(true);
 
       // Instantly position the center dot
       if (dotRef.current) {
@@ -59,7 +59,7 @@ export function CustomCursor() {
       if (!target || !(target instanceof Element)) return;
 
       const interactive = target.closest(
-        'a, button, [role="button"], input, textarea, select, .tech-tile, .skill-chip, .project-mockup-trigger, .scaffold-card, .timeline-node-card'
+        'a, button, [role="button"], input, textarea, select, .tech-tile, .skill-chip, .project-mockup-trigger, .scaffold-card, .timeline-node-card, .milestone-dot-btn, .sticky-year-card, .project-editorial-card'
       );
 
       if (interactive) {
@@ -106,7 +106,7 @@ export function CustomCursor() {
       window.removeEventListener('mouseover', handleMouseOver);
       if (rafId.current) cancelAnimationFrame(rafId.current);
     };
-  }, [isVisible]);
+  }, []);
 
   // Touch or reduced-motion devices return null
   if (typeof window !== 'undefined' && window.matchMedia) {

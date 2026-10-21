@@ -71,7 +71,7 @@ export function Skills({ onSelectSkillForProjects }) {
         />
 
         {/* Search and Category Control Bar */}
-        <div className="skills-toolbar">
+        <div className="skills-toolbar reveal-on-scroll">
           {/* Live Search Field */}
           <div className="skills-search-box">
             <Search size={16} className="skills-search-icon" aria-hidden="true" />
@@ -195,9 +195,9 @@ export function Skills({ onSelectSkillForProjects }) {
             role="tabpanel"
             aria-labelledby={`${baseId}-tab-${activeTab}`}
             tabIndex={0}
-            className="skills-tiles-grid"
+            className="skills-tiles-grid reveal-on-scroll"
           >
-            {filteredSkills.map((skill) => {
+            {filteredSkills.map((skill, index) => {
               const isSelected = selectedSkill === skill.name;
               const hasProjects = projects.some((p) =>
                 p.techStack.some((t) => t.toLowerCase() === skill.name.toLowerCase())
@@ -208,6 +208,7 @@ export function Skills({ onSelectSkillForProjects }) {
                   key={skill.name}
                   role="button"
                   tabIndex={0}
+                  style={{ '--tile-stagger': index % 10 }}
                   onClick={() => handleSkillClick(skill.name)}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' || e.key === ' ') {

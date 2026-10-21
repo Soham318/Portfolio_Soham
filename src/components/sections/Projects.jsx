@@ -74,7 +74,7 @@ export function Projects({ activeTechFilter, onClearTechFilter }) {
         />
 
         {/* Filter Toolbar: Search, Active Tech Pill, Category Tabs */}
-        <div className="projects-toolbar">
+        <div className="projects-toolbar reveal-on-scroll">
           <div className="projects-toolbar-top">
             {/* Live Search Field */}
             <div className="skills-search-box" style={{ maxWidth: '420px', flex: '1 1 280px' }}>
@@ -161,7 +161,7 @@ export function Projects({ activeTechFilter, onClearTechFilter }) {
               return (
                 <article
                   key={proj.id}
-                  className={`project-editorial-card ${isReversed ? 'layout-reversed' : ''}`}
+                  className={`project-editorial-card reveal-on-scroll ${isReversed ? 'layout-reversed' : ''}`}
                 >
                   {/* Visual Column: Browser Mockup Frame */}
                   <div className="project-card-media-col">

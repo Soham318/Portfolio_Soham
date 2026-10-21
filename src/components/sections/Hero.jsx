@@ -73,7 +73,7 @@ export function Hero() {
 
       <div className="container">
         {/* Editorial Sub-Header Banner */}
-        <div className="hero-editorial-topbar" aria-hidden="true">
+        <div className="hero-editorial-topbar hero-rise-item hero-rise-intro" aria-hidden="true">
           <span className="editorial-pill">ENGINEER • BUILDER</span>
           <span className="editorial-separator" />
           <span className="editorial-pill">BASED IN INDIA</span>
@@ -83,27 +83,27 @@ export function Hero() {
           {/* Left Column: Headline and Call to Actions */}
           <div className="hero-content">
             {/* Recruiter Status Pill */}
-            <div className="status-pill">
+            <div className="status-pill hero-rise-item hero-rise-intro">
               <span className="status-dot" aria-hidden="true"></span>
               <span>VJTI Undergraduate • Seeking Software Engineering Internships</span>
             </div>
 
-            <p className="hero-greeting">Portfolio & Technical Showcase</p>
+            <p className="hero-greeting hero-rise-item hero-rise-intro">Portfolio & Technical Showcase</p>
 
-            <h1 id="hero-name" className="hero-title">
+            <h1 id="hero-name" className="hero-title hero-rise-item hero-rise-name">
               Hi, I'm <span className="hero-title-gradient">{personal.name}</span>
             </h1>
 
-            <p className="hero-subtitle">
+            <p className="hero-subtitle hero-rise-item hero-rise-headline">
               {personal.headline}
             </p>
 
-            <p className="hero-description">
+            <p className="hero-description hero-rise-item hero-rise-desc">
               {personal.bio}
             </p>
 
             {/* Action Buttons: Explore Projects, LinkedIn Profile & GitHub */}
-            <div className="hero-actions">
+            <div className="hero-actions hero-rise-item hero-rise-actions">
               <Button href="#projects" variant="primary" icon={ArrowDown} iconPosition="right">
                 Explore Projects
               </Button>
@@ -128,7 +128,7 @@ export function Hero() {
             </div>
 
             {/* Verified Academic & Competitive Metrics */}
-            <div className="hero-metrics">
+            <div className="hero-metrics hero-rise-item hero-rise-metrics">
               <div className="hero-metric-item">
                 <span className="hero-metric-value">VJTI</span>
                 <span className="hero-metric-label">B.Tech Comp Eng (Minor: Cybersecurity)</span>
@@ -145,7 +145,7 @@ export function Hero() {
           </div>
 
           {/* Right Column: Visual Editorial Identity Card */}
-          <div className="hero-visual-container">
+          <div className="hero-visual-container hero-rise-item hero-rise-card">
             <div className="editorial-profile-frame">
               {/* Neon corner bracket accents */}
               <div className="corner-bracket corner-tl" aria-hidden="true" />

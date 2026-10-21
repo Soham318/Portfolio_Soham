@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
-import { GraduationCap, Award, BookOpen, Code2, Server, Database, Layers, Sparkles } from 'lucide-react';
+import { useEffect, useRef, useState, useCallback } from 'react';
+import { GraduationCap, Award, BookOpen, Code2, Server, Compass, CheckCircle2 } from 'lucide-react';
 import { SectionHeading } from '../common/SectionHeading';
 import { profileData } from '../../data/profileData';
 
@@ -7,90 +7,118 @@ const MILESTONE_ICONS = {
   'milestone-1': BookOpen,
   'milestone-2': GraduationCap,
   'milestone-3': Award,
-  'milestone-4': GraduationCap,
-  'milestone-5': Code2,
-  'milestone-6': Server,
-  'milestone-7': Database,
-  'milestone-8': Layers
+  'milestone-4': Server,
+  'milestone-5': Code2
 };
 
 /**
  * Animated Education & Learning Timeline
- * Progressive line drawing animation as user scrolls down,
- * IntersectionObserver-based milestone reveals, active node illumination,
- * and responsive mobile layout.
+ * Inspired by modern developer portfolios:
+ * - Scroll-driven bidirectional progressive line filling and reverse retreat
+ * - Sticky/floating year indicator tracking active milestone (2013–2022 -> 2026)
+ * - Distinct visual styling for formal education vs self-directed technical learning
+ * - Fluid staggered directional card reveals
  */
 export function Timeline() {
   const { timelineMilestones } = profileData;
-  const containerRef = useRef(null);
-  const [activeIndices, setActiveIndices] = useState(() => {
+  const sectionRef = useRef(null);
+  const trackRef = useRef(null);
+  const nodeRefs = useRef([]);
+
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [progressHeight, setProgressHeight] = useState(0);
+  const [revealedNodes, setRevealedNodes] = useState(() => {
     if (typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       return new Set(timelineMilestones.map((_, i) => i));
     }
     return new Set([0]);
   });
-  const [progressHeight, setProgressHeight] = useState(() => {
-    if (typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      return 100;
+
+  const scrollToMilestone = useCallback((index) => {
+    const node = nodeRefs.current[index];
+    if (node) {
+      node.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
-    return 0;
-  });
+  }, []);
 
   useEffect(() => {
-    // Check reduced motion
-    const prefersReduced = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReduced) return;
+    const prefersReduced =
+      typeof window !== 'undefined' &&
+      window.matchMedia &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    const nodeElements = containerRef.current?.querySelectorAll('.timeline-tree-node');
-    if (!nodeElements || nodeElements.length === 0) return;
+    if (prefersReduced) {
+      return;
+    }
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const index = Number(entry.target.getAttribute('data-index'));
-          if (entry.isIntersecting) {
-            setActiveIndices((prev) => {
-              const updated = new Set(prev);
-              updated.add(index);
-              return updated;
-            });
+    // Scroll calculation for bidirectional progress and active milestone update
+    const handleScroll = () => {
+      if (!sectionRef.current || !trackRef.current) return;
+
+      const viewportHeight = window.innerHeight;
+      const triggerY = viewportHeight * 0.45; // Activation focal line
+
+      // 1. Calculate active milestone based on node positions relative to trigger line
+      let currentActive = 0;
+      nodeRefs.current.forEach((nodeEl, idx) => {
+        if (!nodeEl) return;
+        const rect = nodeEl.getBoundingClientRect();
+        // Check if node pin top has crossed the focal trigger line
+        if (rect.top + 30 <= triggerY) {
+          currentActive = idx;
+        }
+      });
+      setActiveIndex(currentActive);
+
+      // 2. Mark revealed nodes as user scrolls down
+      setRevealedNodes((prev) => {
+        let changed = false;
+        const next = new Set(prev);
+        nodeRefs.current.forEach((nodeEl, idx) => {
+          if (!nodeEl) return;
+          const rect = nodeEl.getBoundingClientRect();
+          if (rect.top <= viewportHeight * 0.88) {
+            if (!next.has(idx)) {
+              next.add(idx);
+              changed = true;
+            }
           }
         });
-      },
-      {
-        threshold: 0.25,
-        rootMargin: '0px 0px -15% 0px'
+        return changed ? next : prev;
+      });
+
+      // 3. Bidirectional track fill calculation (Pin 0 center to Pin 4 center)
+      const firstNode = nodeRefs.current[0];
+      const lastNode = nodeRefs.current[nodeRefs.current.length - 1];
+
+      if (firstNode && lastNode) {
+        const firstRect = firstNode.getBoundingClientRect();
+        const lastRect = lastNode.getBoundingClientRect();
+        const startY = firstRect.top + 30;
+        const endY = lastRect.top + 30;
+        const totalDistance = endY - startY;
+
+        if (totalDistance > 0) {
+          const currentDistance = triggerY - startY;
+          const pct = Math.min(100, Math.max(0, (currentDistance / totalDistance) * 100));
+          setProgressHeight(pct);
+        }
       }
-    );
-
-    nodeElements.forEach((el) => observer.observe(el));
-
-    // Calculate dynamic line progress height based on active elements
-    const handleScroll = () => {
-      if (!containerRef.current) return;
-      const rect = containerRef.current.getBoundingClientRect();
-      const viewportHeight = window.innerHeight;
-
-      // Start calculating when container enters upper half of viewport
-      const totalHeight = rect.height;
-      const visibleScrolled = Math.max(0, viewportHeight * 0.65 - rect.top);
-      const percentage = Math.min(100, Math.max(0, (visibleScrolled / totalHeight) * 100));
-
-      setProgressHeight(percentage);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
 
     return () => {
-      observer.disconnect();
       window.removeEventListener('scroll', handleScroll);
     };
   }, [timelineMilestones]);
 
+  const activeMilestone = timelineMilestones[activeIndex] || timelineMilestones[0];
+
   return (
-    <section id="timeline" className="section-wrapper" aria-labelledby="timeline-title">
-      <div className="container" ref={containerRef}>
+    <section id="timeline" className="section-wrapper timeline-section" aria-labelledby="timeline-title" ref={sectionRef}>
+      <div className="container">
         <SectionHeading
           id="timeline-title"
           eyebrow="02 // EDUCATION & TIMELINE"
@@ -98,55 +126,147 @@ export function Timeline() {
           subtitle="Academic trajectory at VJTI with Cybersecurity minor, foundational schooling, entrance exam achievements, and core software milestones."
         />
 
-        <div className="learning-timeline-wrapper">
-          {/* Background Track Line */}
-          <div className="timeline-track-bg" aria-hidden="true" />
+        <div className="timeline-interactive-container">
+          {/* Sticky Year Indicator Rail (Desktop beside timeline, mobile sticky header) */}
+          <aside className="timeline-year-rail" aria-label="Timeline Active Year Indicator">
+            <div className="sticky-year-card">
+              <div className="year-card-header">
+                <span className="year-card-eyebrow">
+                  <Compass size={13} aria-hidden="true" />
+                  <span>ACTIVE MILESTONE</span>
+                </span>
+                <span className="year-card-counter">
+                  0{activeIndex + 1} / 0{timelineMilestones.length}
+                </span>
+              </div>
 
-          {/* Animated Progressive Filling Line */}
-          <div
-            className="timeline-track-fill"
-            style={{ height: `${progressHeight}%` }}
-            aria-hidden="true"
-          />
+              {/* Prominent Animated Year / Year Range Display */}
+              <div className="year-display-box" aria-live="polite">
+                <div key={activeMilestone.year} className="year-number-animated">
+                  {activeMilestone.year}
+                </div>
+              </div>
 
-          {/* Milestone Nodes */}
-          <div className="timeline-nodes-list">
-            {timelineMilestones.map((item, index) => {
-              const IconComponent = MILESTONE_ICONS[item.id] || Sparkles;
-              const isEven = index % 2 === 0;
-              const isActive = activeIndices.has(index);
-
-              return (
-                <div
-                  key={item.id}
-                  data-index={index}
-                  className={`timeline-tree-node ${isEven ? 'node-left' : 'node-right'} ${isActive ? 'is-visible' : ''}`}
+              {/* Milestone Summary & Category */}
+              <div className="year-card-body">
+                <span
+                  className={`scaffold-tag ${
+                    activeMilestone.type === 'education' ? 'tag-education' : 'tag-learning'
+                  }`}
                 >
-                  {/* Pin Node with Marker and Ring */}
-                  <div className={`timeline-node-pin ${isActive ? 'active' : ''}`} aria-hidden="true">
-                    <IconComponent size={15} />
-                    <span className="pin-pulse" />
-                  </div>
+                  {activeMilestone.type === 'education' ? 'Formal Education' : 'Self-Directed Learning'}
+                </span>
 
-                  {/* Milestone Content Card */}
-                  <article className="timeline-node-card">
-                    <div className="timeline-node-header">
-                      <span className="scaffold-tag" style={{ color: 'var(--accent-blue)' }}>
-                        {item.badge}
-                      </span>
-                      <span className="timeline-score-pill">{item.score}</span>
+                <h4 className="year-card-title">{activeMilestone.title}</h4>
+                <p className="year-card-inst">{activeMilestone.institution}</p>
+                <div className="year-card-badge">{activeMilestone.score}</div>
+              </div>
+
+              {/* Quick Jump Milestone Dots */}
+              <div className="year-milestone-dots" role="tablist" aria-label="Jump to timeline milestone">
+                {timelineMilestones.map((m, idx) => {
+                  const isActive = idx === activeIndex;
+                  const isPast = idx <= activeIndex;
+                  return (
+                    <button
+                      key={m.id}
+                      type="button"
+                      role="tab"
+                      aria-selected={isActive}
+                      aria-label={`Jump to ${m.year}: ${m.title}`}
+                      className={`milestone-dot-btn ${isActive ? 'is-active' : ''} ${isPast ? 'is-past' : ''}`}
+                      onClick={() => scrollToMilestone(idx)}
+                    >
+                      <span className="dot-circle" />
+                      <span className="dot-year-label">{m.year}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </aside>
+
+          {/* Timeline Center Tree */}
+          <div className="learning-timeline-wrapper" ref={trackRef}>
+            {/* Background Track Line */}
+            <div className="timeline-track-bg" aria-hidden="true" />
+
+            {/* Animated Progressive Filling Line */}
+            <div
+              className="timeline-track-fill"
+              style={{ height: `${progressHeight}%` }}
+              aria-hidden="true"
+            />
+
+            {/* Milestone Nodes */}
+            <div className="timeline-nodes-list">
+              {timelineMilestones.map((item, index) => {
+                const IconComponent = MILESTONE_ICONS[item.id] || Code2;
+                const isEven = index % 2 === 0;
+                const isRevealed = revealedNodes.has(index);
+                const isActiveMarker = index <= activeIndex;
+                const isCurrentActive = index === activeIndex;
+                const isFormalEducation = item.type === 'education';
+
+                return (
+                  <div
+                    key={item.id}
+                    ref={(el) => (nodeRefs.current[index] = el)}
+                    data-index={index}
+                    className={`timeline-tree-node ${isEven ? 'node-left' : 'node-right'} ${
+                      isRevealed ? 'is-revealed' : ''
+                    } ${isCurrentActive ? 'node-current' : ''}`}
+                  >
+                    {/* Pin Node with Marker and Ring */}
+                    <div
+                      className={`timeline-node-pin ${isActiveMarker ? 'active' : ''} ${
+                        isFormalEducation ? 'pin-education' : 'pin-learning'
+                      }`}
+                      aria-hidden="true"
+                    >
+                      <IconComponent size={15} />
+                      <span className="pin-pulse" />
                     </div>
 
-                    <h3 className="timeline-node-title">{item.title}</h3>
-                    <p className="timeline-node-org">{item.institution}</p>
-                    <p className="timeline-node-desc">{item.description}</p>
-                  </article>
-                </div>
-              );
-            })}
+                    {/* Milestone Content Card */}
+                    <article
+                      className={`timeline-node-card ${isFormalEducation ? 'card-education' : 'card-learning'} ${
+                        isCurrentActive ? 'card-current' : ''
+                      }`}
+                    >
+                      <div className="timeline-node-header">
+                        <span
+                          className={`scaffold-tag ${
+                            isFormalEducation ? 'tag-education' : 'tag-learning'
+                          }`}
+                        >
+                          {item.badge}
+                        </span>
+                        <span className="timeline-year-pill">{item.year}</span>
+                      </div>
+
+                      <h3 className="timeline-node-title">{item.title}</h3>
+                      <p className="timeline-node-org">{item.institution}</p>
+                      <p className="timeline-node-desc">{item.description}</p>
+
+                      <div className="timeline-node-footer">
+                        <span className="timeline-score-pill">
+                          <CheckCircle2 size={12} aria-hidden="true" />
+                          <span>{item.score}</span>
+                        </span>
+                        <span className="timeline-type-label">
+                          {isFormalEducation ? 'Formal Education' : 'Self-Directed Learning'}
+                        </span>
+                      </div>
+                    </article>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>
     </section>
   );
 }
+
