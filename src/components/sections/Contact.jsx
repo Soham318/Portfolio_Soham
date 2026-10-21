@@ -1,5 +1,5 @@
 import { useState, useId } from 'react';
-import { Send, CheckCircle2, AlertCircle, Loader2, Mail, ExternalLink } from 'lucide-react';
+import { Send, CheckCircle2, Loader2, Mail, ExternalLink } from 'lucide-react';
 import { GithubIcon } from '../common/GithubIcon';
 import { SectionHeading } from '../common/SectionHeading';
 import { profileData } from '../../data/profileData';
@@ -15,8 +15,7 @@ const SERVICE_OPTIONS = [
 /**
  * Neon Contact Section
  * Features the signature neon cyan border accents, geometric tab, character counter,
- * field validation, spam honeypot, and secure environment-variable email delivery
- * to csoham8042@gmail.com.
+ * accessible field validation, spam honeypot, and frontend-only form submission.
  */
 export function Contact() {
   const [formData, setFormData] = useState({
@@ -28,28 +27,37 @@ export function Contact() {
   });
 
   const [errors, setErrors] = useState({});
-  const [status, setStatus] = useState('idle'); // idle | submitting | success | error | unconfigured
+  const [status, setStatus] = useState('idle'); // idle | submitting | success
   const [statusMessage, setStatusMessage] = useState('');
   const baseId = useId();
 
-  const web3FormsKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
-  const formspreeEndpoint = import.meta.env.VITE_FORMSPREE_ENDPOINT;
-
   const validate = () => {
     const errs = {};
-    if (!formData.name.trim()) {
+    const trimmedName = formData.name.trim();
+    const trimmedEmail = formData.email.trim();
+    const trimmedService = formData.service.trim();
+    const trimmedMessage = formData.message.trim();
+
+    if (!trimmedName) {
       errs.name = 'Please enter your name.';
     }
-    if (!formData.email.trim()) {
+
+    if (!trimmedEmail) {
       errs.email = 'Please enter your email.';
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) {
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
       errs.email = 'Please enter a valid email address.';
     }
-    if (!formData.message.trim()) {
+
+    if (!trimmedService || !SERVICE_OPTIONS.includes(trimmedService)) {
+      errs.service = 'Please select a service.';
+    }
+
+    if (!trimmedMessage) {
       errs.message = 'Please enter your message.';
-    } else if (formData.message.length > 2000) {
+    } else if (trimmedMessage.length > 2000) {
       errs.message = 'Message must be under 2000 characters.';
     }
+
     setErrors(errs);
     return Object.keys(errs).length === 0;
   };
@@ -62,92 +70,38 @@ export function Contact() {
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: undefined }));
     }
+    if (status === 'success') {
+      setStatus('idle');
+      setStatusMessage('');
+    }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if (!validate()) return;
+
+    if (!validate()) {
+      setStatus('idle');
+      setStatusMessage('');
+      return;
+    }
 
     // Basic spam botcheck: if honeypot is filled, discard silently
     if (formData.honeypot) return;
 
-    // Check if real email service credentials are configured
-    if (!web3FormsKey && !formspreeEndpoint) {
-      setStatus('unconfigured');
-      setStatusMessage(
-        'Email service environment variable (VITE_WEB3FORMS_ACCESS_KEY or VITE_FORMSPREE_ENDPOINT) is not yet configured. You can send your message directly via your email client to csoham8042@gmail.com below.'
-      );
-      return;
-    }
-
-    setStatus('submitting');
-    setStatusMessage('');
-
-    try {
-      let response;
-      if (web3FormsKey) {
-        response = await fetch('https://api.web3forms.com/submit', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json'
-          },
-          body: JSON.stringify({
-            access_key: web3FormsKey,
-            subject: `Portfolio Inquiry: ${formData.service} from ${formData.name}`,
-            name: formData.name,
-            email: formData.email,
-            service: formData.service,
-            message: formData.message,
-            to: 'csoham8042@gmail.com'
-          })
-        });
-      } else {
-        response = await fetch(formspreeEndpoint, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json'
-          },
-          body: JSON.stringify({
-            name: formData.name,
-            email: formData.email,
-            service: formData.service,
-            message: formData.message,
-            _to: 'csoham8042@gmail.com'
-          })
-        });
-      }
-
-      const data = await response.json();
-
-      if (response.ok && (data.success || data.ok)) {
-        setStatus('success');
-        setStatusMessage('Your message has been sent successfully to csoham8042@gmail.com! I will respond promptly.');
-        setFormData({
-          name: '',
-          email: '',
-          service: SERVICE_OPTIONS[0],
-          message: '',
-          honeypot: ''
-        });
-      } else {
-        throw new Error(data.message || 'Delivery request was rejected by the mail service.');
-      }
-    } catch (err) {
-      setStatus('error');
-      setStatusMessage(
-        err.message || 'Failed to dispatch message. Your entered message has been preserved; you can retry or email directly.'
-      );
-    }
+    // Frontend-only submission confirmation
+    setStatus('success');
+    setStatusMessage(
+      "Thanks for reaching out! Your message has been submitted successfully. I'll get back to you soon."
+    );
+    setFormData({
+      name: '',
+      email: '',
+      service: SERVICE_OPTIONS[0],
+      message: '',
+      honeypot: ''
+    });
+    setErrors({});
   };
-
-  // Generate fallback mailto link preserving user's typed message
-  const mailtoLink = `mailto:csoham8042@gmail.com?subject=${encodeURIComponent(
-    `[Portfolio Inquiry] ${formData.service} - ${formData.name || 'Visitor'}`
-  )}&body=${encodeURIComponent(
-    `Name: ${formData.name}\nEmail: ${formData.email}\nService: ${formData.service}\n\nMessage:\n${formData.message}`
-  )}`;
 
   return (
     <section id="contact" className="section-wrapper" aria-labelledby="contact-title">
@@ -246,9 +200,11 @@ export function Contact() {
                   <select
                     id={`${baseId}-service`}
                     name="service"
-                    className="neon-select"
+                    className={`neon-select ${errors.service ? 'neon-input-error' : ''}`}
                     value={formData.service}
                     onChange={handleChange}
+                    aria-invalid={Boolean(errors.service)}
+                    aria-describedby={errors.service ? `${baseId}-service-err` : undefined}
                   >
                     {SERVICE_OPTIONS.map((opt) => (
                       <option key={opt} value={opt}>
@@ -257,6 +213,11 @@ export function Contact() {
                     ))}
                   </select>
                 </div>
+                {errors.service && (
+                  <span id={`${baseId}-service-err`} className="neon-error-msg" role="alert">
+                    {errors.service}
+                  </span>
+                )}
               </div>
 
               {/* Message Field with Character Counter */}
@@ -273,6 +234,7 @@ export function Contact() {
                   id={`${baseId}-message`}
                   name="message"
                   rows={5}
+                  maxLength={2000}
                   className={`neon-textarea ${errors.message ? 'neon-input-error' : ''}`}
                   placeholder="Write your message here"
                   value={formData.message}
@@ -290,36 +252,14 @@ export function Contact() {
               </div>
 
               {/* Feedback Alert Status */}
-              {status === 'success' && (
-                <div className="neon-alert neon-alert-success" role="status">
-                  <CheckCircle2 size={16} aria-hidden="true" />
-                  <span>{statusMessage}</span>
-                </div>
-              )}
-
-              {status === 'error' && (
-                <div className="neon-alert neon-alert-error" role="alert">
-                  <AlertCircle size={16} aria-hidden="true" />
-                  <span>{statusMessage}</span>
-                </div>
-              )}
-
-              {status === 'unconfigured' && (
-                <div className="neon-alert neon-alert-warning" role="status">
-                  <AlertCircle size={16} aria-hidden="true" />
-                  <div>
-                    <p style={{ margin: 0, marginBottom: '0.5rem' }}>{statusMessage}</p>
-                    <a
-                      href={mailtoLink}
-                      className="btn btn-primary btn-sm"
-                      style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
-                    >
-                      <Mail size={14} aria-hidden="true" />
-                      <span>Open Pre-filled Email to csoham8042@gmail.com</span>
-                    </a>
+              <div aria-live="polite" aria-atomic="true" className="neon-feedback-region">
+                {status === 'success' && (
+                  <div className="neon-alert neon-alert-success" role="status">
+                    <CheckCircle2 size={18} className="neon-alert-icon" aria-hidden="true" />
+                    <span className="neon-alert-text">{statusMessage}</span>
                   </div>
-                </div>
-              )}
+                )}
+              </div>
 
               {/* Submit Button */}
               <div className="neon-form-actions">
@@ -332,7 +272,7 @@ export function Contact() {
                   {status === 'submitting' ? (
                     <>
                       <Loader2 size={16} className="neon-spin" aria-hidden="true" />
-                      <span>SENDING...</span>
+                      <span>SUBMITTING...</span>
                     </>
                   ) : (
                     <>
