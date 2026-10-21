@@ -2,6 +2,7 @@ import { useState, useCallback } from 'react';
 import { ArrowDown, Code2, Award, Terminal, ArrowUpRight, GraduationCap, ShieldCheck, ExternalLink } from 'lucide-react';
 import { Button } from '../common/Button';
 import { GithubIcon } from '../common/GithubIcon';
+import { StrokeText } from '../common/StrokeText';
 import { profileData } from '../../data/profileData';
 import heroAuroraImg from '../../assets/images/hero_aurora_wave.jpg';
 
@@ -91,12 +92,55 @@ export function Hero() {
             <p className="hero-greeting hero-rise-item hero-rise-intro">Portfolio & Technical Showcase</p>
 
             <h1 id="hero-name" className="hero-title hero-rise-item hero-rise-name">
-              Hi, I'm <span className="hero-title-gradient">{personal.name}</span>
+              <span className="hero-title-prefix">Hi, I&apos;m</span>
+              <span className="hero-title-name-wrap">
+                <StrokeText
+                  text={personal.name}
+                  strokeColor="var(--accent-blue)"
+                  fillColor="var(--text-primary)"
+                  strokeWidth={1.4}
+                  drawDuration={1.4}
+                  fillDelay={0.2}
+                  stagger={0.045}
+                  ease="power2.out"
+                  trigger="mount"
+                  fillMode="wipe"
+                  wipeFrom="left"
+                  fontSize={56}
+                  fontWeight={800}
+                  fontFamily="var(--font-sans)"
+                  letterSpacing={-1.5}
+                  hoverRedraw={true}
+                  className="hero-stroke-name"
+                />
+              </span>
             </h1>
 
-            <p className="hero-subtitle hero-rise-item hero-rise-headline">
-              {personal.headline}
-            </p>
+            <div className="hero-subtitle hero-rise-item hero-rise-headline">
+              <span className="headline-static-part">Computer Engineering Student &nbsp;|&nbsp; </span>
+              <span className="headline-stroke-wrap">
+                <StrokeText
+                  text="Aspiring Software Developer"
+                  strokeColor="var(--accent-teal)"
+                  fillColor="var(--accent-teal)"
+                  strokeWidth={1.2}
+                  drawDuration={1.2}
+                  fillDelay={0.18}
+                  stagger={0.03}
+                  ease="power2.out"
+                  trigger="mount"
+                  fillMode="wipe"
+                  wipeFrom="left"
+                  fontSize={26}
+                  fontWeight={700}
+                  fontFamily="var(--font-sans)"
+                  letterSpacing={-0.6}
+                  delay={0.9}
+                  inline={true}
+                  className="hero-stroke-headline"
+                />
+              </span>
+            </div>
 
             <p className="hero-description hero-rise-item hero-rise-desc">
               {personal.bio}

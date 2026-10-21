@@ -129,28 +129,28 @@
 
 .hero-rise-name {
   animation-duration: 720ms;
-  animation-delay: 140ms;
+  animation-delay: 120ms;
 }
 
 .hero-rise-headline {
-  animation-delay: 240ms;
+  animation-delay: 750ms;
 }
 
 .hero-rise-desc {
-  animation-delay: 340ms;
+  animation-delay: 1200ms;
 }
 
 .hero-rise-actions {
-  animation-delay: 440ms;
+  animation-delay: 1400ms;
 }
 
 .hero-rise-metrics {
-  animation-delay: 540ms;
+  animation-delay: 1600ms;
 }
 
 .hero-rise-card {
   animation-duration: 740ms;
-  animation-delay: 300ms;
+  animation-delay: 350ms;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -184,12 +184,35 @@
 }
 
 .hero-title {
-  font-size: clamp(2.4rem, 5vw + 1rem, var(--text-6xl));
+  font-size: clamp(2rem, 3.8vw + 0.6rem, var(--text-5xl));
   font-weight: var(--weight-extrabold);
-  line-height: 1.1;
+  line-height: 1.12;
   letter-spacing: -0.03em;
   margin-bottom: var(--space-4);
   color: var(--text-primary);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+.hero-title-prefix {
+  font-size: clamp(1.25rem, 2vw, var(--text-xl));
+  font-weight: var(--weight-semibold);
+  color: var(--text-secondary);
+  letter-spacing: -0.01em;
+}
+
+.hero-title-name-wrap {
+  width: 100%;
+  max-width: 650px;
+  display: block;
+}
+
+.hero-stroke-name .stroke-text__svg {
+  width: 100%;
+  max-width: 650px;
+  filter: drop-shadow(0 0 16px var(--accent-blue-soft));
 }
 
 .hero-title-gradient {
@@ -200,11 +223,30 @@
 }
 
 .hero-subtitle {
-  font-size: clamp(1.1rem, 2vw + 0.2rem, var(--text-xl));
+  font-size: clamp(1rem, 1.4vw + 0.2rem, var(--text-lg));
   color: var(--text-secondary);
   font-weight: var(--weight-medium);
   line-height: var(--leading-snug);
   margin-bottom: var(--space-6);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.headline-static-part {
+  white-space: nowrap;
+}
+
+.headline-stroke-wrap {
+  display: inline-block;
+  vertical-align: middle;
+  width: clamp(240px, 32vw, 320px);
+}
+
+.hero-stroke-headline .stroke-text__svg {
+  width: 100%;
+  filter: drop-shadow(0 0 10px var(--accent-teal-soft));
 }
 
 .hero-description {

@@ -1,0 +1,57 @@
+/* ==========================================================================
+   STROKE TEXT COMPONENT STYLES
+   React Bits Animated Stroke Typography
+   ========================================================================== */
+
+.stroke-text {
+  display: block;
+  width: 100%;
+  line-height: 1;
+  position: relative;
+}
+
+.stroke-text--inline {
+  display: inline-block;
+  width: auto;
+  max-width: 100%;
+  vertical-align: middle;
+}
+
+.stroke-text--hover {
+  cursor: pointer;
+}
+
+.stroke-text__svg {
+  display: block;
+  width: 100%;
+  max-width: var(--stroke-text-width, 100%);
+  height: auto;
+  margin: 0;
+  overflow: visible;
+}
+
+.stroke-text--center .stroke-text__svg {
+  margin: 0 auto;
+}
+
+.stroke-text--right .stroke-text__svg {
+  margin: 0 0 0 auto;
+}
+
+.stroke-text__stroke,
+.stroke-text__fill {
+  user-select: none;
+}
+
+/* Reduced Motion: eliminate all transitions and display complete glyphs */
+@media (prefers-reduced-motion: reduce) {
+  .stroke-text__svg {
+    animation: none !important;
+    transition: none !important;
+  }
+  .stroke-text__stroke,
+  .stroke-text__fill {
+    stroke-dashoffset: 0 !important;
+    opacity: 1 !important;
+  }
+}
